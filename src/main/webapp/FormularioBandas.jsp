@@ -1,6 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ page import="java.util.ArrayList"%>
+<%@ page import="model.beans.Show"%>
 <%
+ArrayList<Show> listashows = (ArrayList<Show>) request.getAttribute("shows");
+
 String titulo = request.getAttribute("titulo").toString();
 String placeHolderInput = request.getAttribute("defaultInput").toString();
 String selectedOption = request.getAttribute("selected").toString();
@@ -26,7 +30,16 @@ String selectedOption = request.getAttribute("selected").toString();
 				<option value="FORRO">FORRÓ</option>
 				<option value=AXE>AXÉ</option>
 			</select>
+			
+			<div class="group-checkbox">
+				<% for(Show show : listashows){ %>
+					<input type="checkbox" id="ROCK" name="ROCK" value="ROCK">
+					<label for="vehicle1"> ROCK</label>
+				<%} %>
+					
+				</div>
 		</div>
+		
 		
 		<input type="button" value="Adicionar" class="Botao1"
 			onclick="validar()">
