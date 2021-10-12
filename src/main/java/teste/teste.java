@@ -1,27 +1,25 @@
 package teste;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 
-import model.Local;
-import model.Show;
-import model.ShowDAO;
+import model.beans.Banda;
+import model.dao.BandaDAO;
+import model.enums.Genero;
 
 public class teste {
 
 	public static void main(String[] args) {
-		/*Banda banda = new Banda();
+		Banda banda = new Banda();
 
 		banda.setIdBanda(3);
 		
 		BandaDAO dao = new BandaDAO();
 		
-		//dao.adicionarBanda(banda);
+		//dao.adicionarBaanda);
 		
-		ArrayList<Banda> lista = dao.listarBandas();
+		Genero[] generos = {};
+		
+		ArrayList<Banda> lista = dao.listarBandasComFiltro("z", generos);
 		
 		for (Banda banda2 : lista) {
 			System.out.println(banda2.getIdBanda());
@@ -29,7 +27,7 @@ public class teste {
 		}
 		
 		//dao.selecionarBanda(banda).getIdBanda();
-		banda.setNome("banda2");
+		/*banda.setNome("banda2");
 		banda.setGenero(Genero.ROCK);
 		dao.alterarBanda(banda);
 		
@@ -72,17 +70,19 @@ public class teste {
 		Show show = new Show();
 		ShowDAO dao = new ShowDAO();
 		
+		
 		show.setData(dataNascimento);
 		show.setIdLocal(1);
 		show.setIdShow(5);
 		
 		
-		ArrayList<Show> lista = dao.listarShows();
+		/*ArrayList<Show> lista = dao.listarShows();
 		
 		for (Show show2 : lista) {
 			System.out.println(show2.getData().getTime());
 			System.out.println(show2.getIdLocal());
 		}
+	
 	
 		show.setData(dataNascimento);
 		dao.alterarShow(show);

@@ -1,4 +1,6 @@
-package model;
+package model.beans;
+
+import model.enums.Genero;
 
 public class Banda {
 	private int idBanda;

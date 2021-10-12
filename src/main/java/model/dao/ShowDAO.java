@@ -1,29 +1,34 @@
-package model;
+package model.dao;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import jdbc.ConnectionFactory;
+import model.beans.Show;
 
-public class LocalDAO {
+public class ShowDAO {
 	private Connection connection;
 
-	public LocalDAO() {
+	public ShowDAO() {
 		this.connection = new ConnectionFactory().getConnection();
 	}
 	
-	public void adicionarLocal(Local local) {
+	
+	public void adicionarShow(Show show) {
 		
-		String sql = "INSERT INTO locais(nome,capacidade) VALUES(?,?)";
+		String sql = "INSERT INTO shows(id_local,data) VALUES(?,?)";
 		
 		try {
 			PreparedStatement stmt = connection.prepareStatement(sql);
 
-			stmt.setString(1, local.getNome());
-			stmt.setInt(2, local.getCapacidade());
+			stmt.setInt(1, show.getIdLocal());
+			stmt.setDate(2, new Date(
+                    show.getData().getTimeInMillis()));
 			
 			stmt.executeUpdate();
 			stmt.close();
@@ -32,57 +37,63 @@ public class LocalDAO {
 		}
 	}
 	
-	public ArrayList<Local> listarLocais() {
-		String sql = "select * from locais order by id_local";
+	public ArrayList<Show> listarShows() {
+		String sql = "select * from shows order by id_show";
 
         try {
-        	ArrayList<Local> locais = new ArrayList<Local>();
+        	ArrayList<Show> shows = new ArrayList<Show>();
 
             PreparedStatement stmt = connection.prepareStatement(sql);
             ResultSet rs = stmt.executeQuery();
 
             while (rs.next()) {
                 // criando o objeto Contato
-            	Local local = new Local();
+            	Show show = new Show();
             	
-            	local.setIdLocal(rs.getInt("id_local"));
-            	local.setNome(rs.getString("nome"));
-            	local.setCapacidade(rs.getInt("capacidade"));
+            	show.setIdLocal(rs.getInt("id_local"));
+            	show.setIdShow(rs.getInt("id_show"));
+            	
+            	  Calendar data = Calendar.getInstance();
+                  data.setTime(rs.getDate("data"));
+                  show.setData(data);
                 		
                 // adicionando o objeto à lista
-                locais.add(local);
+                shows.add(show);
             }
             
             rs.close();
             stmt.close();
             
-            return locais;
+            return shows;
             
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 	
-	public Local selecionarLocal(Local local) {
-        String sql = "select * from locais where id_local=?";
+	public Show selecionarShow(Show show) {
+        String sql = "select * from shows where id_show=?";
         
         try {        	
 			PreparedStatement stmt = connection.prepareStatement(sql);
-			stmt.setInt(1, local.getIdLocal());
+			stmt.setInt(1, show.getIdShow());
 			ResultSet rs = stmt.executeQuery();
 			
 			while(rs.next()) {
             	
-            	local.setIdLocal(rs.getInt("id_local"));
-                local.setNome(rs.getString("nome"));
-                local.setCapacidade(rs.getInt("capacidade"));
+				show.setIdShow(rs.getInt("id_show"));
+            	show.setIdLocal(rs.getInt("id_local"));
+
+          	  Calendar data = Calendar.getInstance();
+                data.setTime(rs.getDate("data"));
+                show.setData(data);
 
 			}
 			
 			rs.close();
             stmt.close();
             
-			return local;
+			return show;
 			
         }catch(SQLException e) {
             throw new RuntimeException(e);
@@ -90,15 +101,16 @@ public class LocalDAO {
         
 	}
 	
-	public void alterarLocal(Local local) {
-        String sql = "UPDATE locais SET nome=?, capacidade=? WHERE id_local=?";
+	public void alterarShow(Show show) {
+        String sql = "UPDATE shows SET data=?, id_local=? WHERE id_show=?";
         
         try {        	
 			PreparedStatement stmt = connection.prepareStatement(sql);
 			
-			stmt.setString(1, local.getNome());
-			stmt.setInt(2, local.getCapacidade());
-			stmt.setInt(3, local.getIdLocal());
+			stmt.setDate(1, new Date(
+                    show.getData().getTimeInMillis()));
+			stmt.setInt(2, show.getIdLocal());
+			stmt.setInt(3, show.getIdShow());
 
 			stmt.executeUpdate();
 			stmt.close();
@@ -109,13 +121,13 @@ public class LocalDAO {
         
 	}
 	
-	public void deletarBanda(Local local) {
-        String sql = "DELETE FROM locais where id_local=?";
+	public void deletarShow(Show show) {
+        String sql = "DELETE FROM shows where id_show=?";
         
         try {        	
 			PreparedStatement stmt = connection.prepareStatement(sql);
 			
-			stmt.setInt(1, local.getIdLocal());
+			stmt.setInt(1, show.getIdShow());
 			
 			stmt.executeUpdate();
 			stmt.close();
@@ -125,5 +137,4 @@ public class LocalDAO {
         }
         
 	}
-	
 }

@@ -15,7 +15,7 @@ public class ConnectionFactory {
 	      try {
 	    	  Class.forName(driver);
 			  return DriverManager.getConnection(
-				  url, userAndPassword, userAndPassword);
+				  url, userAndPassword, "");
 	      } catch (SQLException e) {
 	          throw new RuntimeException(e);
 	      } catch (ClassNotFoundException e) {

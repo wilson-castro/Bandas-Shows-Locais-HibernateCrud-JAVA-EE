@@ -1,0 +1,138 @@
+@charset "UTF-8";
+
+@import	url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap');
+
+
+body {
+	height: 100vh;
+	font-family: 'Open Sans', sans-serif;
+	font-size: 1em;
+	font-weight: 400;
+	background-color:rgb(252, 249, 249);
+	
+}
+
+.app{
+  display: flex;
+  flex-direction: column;
+  justify-content:center;
+  align-items: center;
+  
+}
+
+h1 {
+	color: #66bbff;
+	font-weight:700;
+}
+
+.cards-group{
+	display:flex;
+	flex-direction:row;
+	
+}
+
+.card {
+  margin: 30px;
+  background-color:#fff;
+  box-shadow: 2px 4px 8px 0 rgba(0,0,0,0.2);
+  transition: 0.3s;
+  
+}
+
+.card:hover {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+.container {
+  padding: 2px 16px 20px 16px;
+}
+
+.container h4{
+  color: #66bbff;
+  border-bottom: 1px solid #66bbff;
+}
+
+.formComponentes{
+	margin-bottom:10px;
+	display:flex;
+	flex-direction:column;
+}
+
+.formComponentes select{
+	margin-top:10px;
+	padding: 5px;
+	width:200px;
+	border: 1px solid #66bbff;
+	border-radius: 5px;
+	background-color:#fff;
+}
+
+.cards-group .card .Botao1 {
+	text-decoration: none;
+	background-color: #66bbff;
+	padding: 5px 10px 5px 10px;
+	color: #fff;
+	font-size: 1.2em;
+	font-weight: 700;
+	border-radius: 5px;
+	border: 0;
+	cursor: pointer;
+}
+
+.group-checkbox{
+	margin-top:5px;
+}
+
+.Botao1 {
+	text-decoration: none;
+	background-color: #66bbff;
+	padding: 5px 10px 5px 10px;
+	color: #fff;
+	font-size: 1.2em;
+	font-weight: 700;
+	border-radius: 5px;
+	border: 0;
+	cursor: pointer;
+}
+
+.Botao2 {
+	text-decoration: none;
+	background-color: #d51213;
+	padding: 5px 10px 5px 10px;
+	color: #fff;
+	font-size: 1.2em;
+	font-weight: 700;
+	border-radius: 5px;
+}
+
+.Caixa2 {
+	margin-top:20px;
+	padding: 5px;
+	width:200px;
+	border: 1px solid #66bbff;
+	border-radius: 5px;
+}
+
+#Caixa3 {
+	padding: 5px;
+	border: 1px solid #ff0000;
+}
+
+#tabela {
+	margin-top: 20px;
+	border-collapse: collapse;
+}
+
+#tabela th {
+	border: 1px solid #ddd;
+	padding: 10px;
+	text-align: center;
+	background-color: #66bbff;
+	color: #fff;
+}
+
+#tabela td {
+	border: 1px solid #ddd;
+	padding: 10px;
+}
+

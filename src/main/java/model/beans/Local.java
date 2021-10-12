@@ -1,5 +1,5 @@
 
-package model;
+package model.beans;
 
 public class Local {
 	private int idLocal;
