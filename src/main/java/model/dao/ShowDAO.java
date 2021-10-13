@@ -10,6 +10,7 @@ import java.util.Calendar;
 
 import jdbc.ConnectionFactory;
 import model.beans.Show;
+import model.beans.ShowBanda;
 
 public class ShowDAO {
 	private Connection connection;
@@ -19,9 +20,9 @@ public class ShowDAO {
 	}
 	
 	
-	public void adicionarShow(Show show) {
+	public void adicionarShow(Show show,int idBanda) {
 		
-		String sql = "INSERT INTO shows(id_local,data) VALUES(?,?)";
+		String sql = "INSERT INTO shows(local_id,data) VALUES(?,?)";
 		
 		try {
 			PreparedStatement stmt = connection.prepareStatement(sql);
@@ -35,6 +36,7 @@ public class ShowDAO {
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
+		
 	}
 	
 	public ArrayList<Show> listarShows() {
@@ -50,7 +52,7 @@ public class ShowDAO {
                 // criando o objeto Contato
             	Show show = new Show();
             	
-            	show.setIdLocal(rs.getInt("id_local"));
+            	show.setIdLocal(rs.getInt("local_id"));
             	show.setIdShow(rs.getInt("id_show"));
             	
             	  Calendar data = Calendar.getInstance();
@@ -82,7 +84,7 @@ public class ShowDAO {
 			while(rs.next()) {
             	
 				show.setIdShow(rs.getInt("id_show"));
-            	show.setIdLocal(rs.getInt("id_local"));
+            	show.setIdLocal(rs.getInt("local_id"));
 
           	  Calendar data = Calendar.getInstance();
                 data.setTime(rs.getDate("data"));
@@ -102,7 +104,7 @@ public class ShowDAO {
 	}
 	
 	public void alterarShow(Show show) {
-        String sql = "UPDATE shows SET data=?, id_local=? WHERE id_show=?";
+        String sql = "UPDATE shows SET data=?, local_id=? WHERE id_show=?";
         
         try {        	
 			PreparedStatement stmt = connection.prepareStatement(sql);

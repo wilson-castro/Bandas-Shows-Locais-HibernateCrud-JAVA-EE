@@ -1,9 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ page import="java.util.ArrayList"%>
-<%@ page import="model.beans.Show"%>
+<%@ page import="model.beans.ShowsLocal"%>
 <%
-ArrayList<Show> listashows = (ArrayList<Show>) request.getAttribute("shows");
+ArrayList<ShowsLocal> listashows = (ArrayList<ShowsLocal>) request.getAttribute("shows");
 
 String titulo = request.getAttribute("titulo").toString();
 String placeHolderInput = request.getAttribute("defaultInput").toString();
@@ -32,12 +32,14 @@ String selectedOption = request.getAttribute("selected").toString();
 			</select>
 			
 			<div class="group-checkbox">
-				<% for(Show show : listashows){ %>
-					<input type="checkbox" id="ROCK" name="ROCK" value="ROCK">
-					<label for="vehicle1"> ROCK</label>
-				<%} %>
+				<% if(titulo.equals("Criar")){
+					for(ShowsLocal show : listashows){ %>
+					<input type="checkbox" id="<%= %>" name="ROCK" value="ROCK">
+					<label for="vehicle1"> ROCK</label><br>
+				<%} 
+				}%>
 					
-				</div>
+			</div>
 		</div>
 		
 		

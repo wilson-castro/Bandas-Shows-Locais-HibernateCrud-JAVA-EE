@@ -1,6 +1,9 @@
 package model.beans;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 public class Show {
 	private int idShow;
@@ -17,9 +20,29 @@ public class Show {
 	public Calendar getData() {
 		return data;
 	}
+	
+	public void setData(String data) {
+		Calendar dataConvertida = null;	
+		
+		try {
+            Date date = new SimpleDateFormat("dd/MM/yyyy")
+                  .parse(data);
+            dataConvertida = Calendar.getInstance();
+            dataConvertida.setTime(date);
+        } catch (ParseException e) {
+            System.out.println("Erro de conversão da data");
+            return; //para a execução do método
+        }
+
+		
+		this.data = dataConvertida;
+	}
+	
 	public void setData(Calendar data) {
+
 		this.data = data;
 	}
+	
 	public Banda[] getBandas() {
 		return bandas;
 	}

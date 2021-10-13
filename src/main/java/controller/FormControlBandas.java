@@ -10,8 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import model.beans.Show;
-import model.dao.ShowDAO;
+import model.beans.ShowsLocal;
+import model.dao.ShowsLocalDAO;
 
 @WebServlet("/FormControlBandas")
 public class FormControlBandas extends HttpServlet {
@@ -27,9 +27,10 @@ public class FormControlBandas extends HttpServlet {
 		String operation = request.getParameter("operation");
 		
 		if(operation.equals("novo")) {
-			ShowDAO showDao = new ShowDAO();
+			ShowsLocalDAO showDao = new ShowsLocalDAO();
 			
-			ArrayList<Show> listaShows = showDao.listarShows();
+        	ArrayList<ShowsLocal> listaShows = showDao.listarShowPorLocal();
+
 			
 			request.setAttribute("titulo", "Criar");
 			request.setAttribute("defaultInput", "Digite um nome...");

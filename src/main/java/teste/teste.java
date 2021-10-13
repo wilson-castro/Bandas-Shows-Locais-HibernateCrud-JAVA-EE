@@ -2,14 +2,13 @@ package teste;
 
 import java.util.ArrayList;
 
-import model.beans.Banda;
-import model.dao.BandaDAO;
-import model.enums.Genero;
+import model.beans.Local;
+import model.dao.LocalDAO;
 
 public class teste {
 
 	public static void main(String[] args) {
-		Banda banda = new Banda();
+		/*Banda banda = new Banda();
 
 		banda.setIdBanda(3);
 		
@@ -27,15 +26,23 @@ public class teste {
 		}
 		
 		//dao.selecionarBanda(banda).getIdBanda();
-		/*banda.setNome("banda2");
+		banda.setNome("banda2");
 		banda.setGenero(Genero.ROCK);
 		dao.alterarBanda(banda);
 		
 		dao.deletarBanda(banda);
-		local.setCapacidade(500);
-		local.setNome("RJ");
 		
-		//dao.adicionarLocal(local);
+		*/
+		
+		
+		// LOCAL CRUD TESTE
+	    Local local = new Local();
+		LocalDAO dao = new LocalDAO();
+		
+		
+		local.setCapacidade(500);
+		local.setNome("SP");
+		
 		
 		ArrayList<Local> lista = dao.listarLocais();
 		
@@ -44,37 +51,30 @@ public class teste {
 			System.out.println(local2.getCapacidade());
 		}
 		
+		local.setIdLocal(4);
+		local.setCapacidade(300);
+		local.setNome("MG");
 		
-		//System.out.println(dao.selecionarLocal(local).getNome());
+		int idShow = 2;
 		
-		dao.alterarLocal(local);
-		
-		System.out.println(dao.selecionarLocal(local).getNome());
-		
-		//dao.deletarBanda(local);
-		 
-		
-        Calendar dataNascimento = null;
-		String dataEmTexto = "03/12/2002";
-		
-		try {
-            Date date = new SimpleDateFormat("dd/MM/yyyy")
-                  .parse(dataEmTexto);
-            dataNascimento = Calendar.getInstance();
-            dataNascimento.setTime(date);
-        } catch (ParseException e) {
-            System.out.println("Erro de conversão da data");
-            return; //para a execução do método
-        }
+		dao.adicionarLocal(local,2);
 
-		Show show = new Show();
+		
+		//dao.alterarLocal(local);
+		//dao.deletarLocal(local);
+		
+        
+		
+		/*Show show = new Show();
 		ShowDAO dao = new ShowDAO();
 		
 		
-		show.setData(dataNascimento);
+		show.setData("02/08/2052");
 		show.setIdLocal(1);
-		show.setIdShow(5);
 		
+		int id_Banda = 2;*/
+		
+		//dao.adicionarShow(show,id_Banda);
 		
 		/*ArrayList<Show> lista = dao.listarShows();
 		
@@ -83,10 +83,15 @@ public class teste {
 			System.out.println(show2.getIdLocal());
 		}
 	
-	
-		show.setData(dataNascimento);
 		dao.alterarShow(show);
 		dao.deletarShow(show);*/
+		
+		/*ShowBanda sb = new ShowBanda();
+		sb.setId_banda(1);
+		sb.setId_show(6);
+		
+		ShowsBandaDAO sbdao = new ShowsBandaDAO();
+		sbdao.adicionar(sb);*/
 	}
 
 }

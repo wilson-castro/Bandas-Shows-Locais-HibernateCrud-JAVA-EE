@@ -23,7 +23,7 @@ DROP TABLE IF EXISTS `showsPorLocal`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `showsPorLocal` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `id_show` int(11) NOT NULL,
   `id_local` int(11) NOT NULL,
   PRIMARY KEY (`id`),

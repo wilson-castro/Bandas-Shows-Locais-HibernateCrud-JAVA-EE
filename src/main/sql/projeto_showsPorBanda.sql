@@ -23,7 +23,7 @@ DROP TABLE IF EXISTS `showsPorBanda`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `showsPorBanda` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL auto_increment,
   `id_banda` int(11) NOT NULL,
   `id_show` int(11) NOT NULL,
   PRIMARY KEY (`id`),
@@ -31,7 +31,7 @@ CREATE TABLE `showsPorBanda` (
   KEY `id_show` (`id_show`),
   CONSTRAINT `showsporbanda_ibfk_1` FOREIGN KEY (`id_banda`) REFERENCES `bandas` (`id_banda`),
   CONSTRAINT `showsporbanda_ibfk_2` FOREIGN KEY (`id_show`) REFERENCES `shows` (`id_show`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+)  ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
