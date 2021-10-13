@@ -30,12 +30,16 @@ String selectedOption = request.getAttribute("selected").toString();
 				<option value="FORRO">FORRÓ</option>
 				<option value=AXE>AXÉ</option>
 			</select>
-			
+					
+			<h5>Shows</h5>
 			<div class="group-checkbox">
 				<% if(titulo.equals("Criar")){
 					for(ShowsLocal show : listashows){ %>
-					<input type="checkbox" id="<%= %>" name="ROCK" value="ROCK">
-					<label for="vehicle1"> ROCK</label><br>
+					<input type="checkbox" id="<%=show.getShow_Id() %>" name="<%= show.getShow_Id() %>" value=<%= show.getShow_Id() %>>
+					<label for="<%= show.getShow_Id() %>">
+					lugar: <%= show.getLugar_nome() %> -
+					 data: <%= show.getData_show() %> -
+					  ID: <%= show.getShow_Id() %></label><br>
 				<%} 
 				}%>
 					
