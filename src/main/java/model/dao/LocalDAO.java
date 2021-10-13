@@ -35,7 +35,8 @@ public class LocalDAO {
 			if (rs.next()) {
 				showlocal.setLocal_Id(rs.getInt(1));
 			}
-			
+
+			rs.close();
 			stmt.close();
 		} catch (SQLException e) {
 			throw new RuntimeException(e);

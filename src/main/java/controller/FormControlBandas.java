@@ -35,6 +35,7 @@ public class FormControlBandas extends HttpServlet {
 			request.setAttribute("titulo", "Criar");
 			request.setAttribute("defaultInput", "Digite um nome...");
 			request.setAttribute("selected", "-selecione-");
+			request.setAttribute("txtBotao", "Adicionar");
 			request.setAttribute("shows", listaShows);
 			
 			RequestDispatcher rd = request.getRequestDispatcher("FormularioBandas.jsp");

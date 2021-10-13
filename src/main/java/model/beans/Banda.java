@@ -6,8 +6,7 @@ public class Banda {
 	private int idBanda;
 	private String nome;
 	private Genero genero;
-	private Show[] shows;
-	
+	private int NumShows;
 	
 	public void setIdBanda(int idBanda) {
 		this.idBanda = idBanda;
@@ -27,11 +26,11 @@ public class Banda {
 	public void setGenero(Genero genero) {
 		this.genero = genero;
 	}
-	public Show[] getShows() {
-		return shows;
+	public int getNumShows() {
+		return NumShows;
 	}
-	public void setShows(Show[] shows) {
-		this.shows = shows;
+	public void setNumShows(int numShows) {
+		NumShows = numShows;
 	}
 	
 	

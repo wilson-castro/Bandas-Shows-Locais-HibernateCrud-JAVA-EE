@@ -8,6 +8,7 @@ ArrayList<ShowsLocal> listashows = (ArrayList<ShowsLocal>) request.getAttribute(
 String titulo = request.getAttribute("titulo").toString();
 String placeHolderInput = request.getAttribute("defaultInput").toString();
 String selectedOption = request.getAttribute("selected").toString();
+String textoBotao = request.getAttribute("txtBotao").toString();
 %>
 <!DOCTYPE html>
 <html>
@@ -19,12 +20,12 @@ String selectedOption = request.getAttribute("selected").toString();
 <body>
 	<h1><%=titulo %> banda</h1>
 
-	<form name="frmContato" action="insert">
+	<form name="frmContato" action="bandas/insert">
 		
 		<div class="formComponentes">
-			<input type="text" name="nome" placeholder="<%=placeHolderInput%>"
+			<input type="text" name="nome" required placeholder="<%=placeHolderInput%>"
 				class="Caixa2">
-			<select id="selectGeneros" name="selectGeneros">
+			<select id="selectGeneros" required name="selectGeneros">
 				<option value="-selecione-">Selecione Genero</option>
 				<option value="ROCK" >ROCK</option>
 				<option value="FORRO">FORRÓ</option>
@@ -35,11 +36,13 @@ String selectedOption = request.getAttribute("selected").toString();
 			<div class="group-checkbox">
 				<% if(titulo.equals("Criar")){
 					for(ShowsLocal show : listashows){ %>
-					<input type="checkbox" id="<%=show.getShow_Id() %>" name="<%= show.getShow_Id() %>" value=<%= show.getShow_Id() %>>
+					<input type="checkbox" id="<%=show.getShow_Id() %>" name="List_ShowsIDs" value=<%= show.getShow_Id() %>>
 					<label for="<%= show.getShow_Id() %>">
-					lugar: <%= show.getLugar_nome() %> -
-					 data: <%= show.getData_show() %> -
-					  ID: <%= show.getShow_Id() %></label><br>
+					<strong>ID</strong>: <%= show.getShow_Id() %> -
+					<strong>Lugar</strong>: <%= show.getLugar_nome() %> -
+					<strong>Data</strong>: <%= show.getData_show() %> -
+					<strong>Capacidade</strong>: <%= show.getCapacidade() %> 
+					  </label><br>
 				<%} 
 				}%>
 					
@@ -47,10 +50,10 @@ String selectedOption = request.getAttribute("selected").toString();
 		</div>
 		
 		
-		<input type="button" value="Adicionar" class="Botao1"
+		<input type="button" value="<%=textoBotao %>" class="Botao1"
 			onclick="validar()">
 	</form>
-	<script src="scripts/setarInputs.js"></script>
+	<script src="scripts/validador.js"></script>
 	<script>
 	document.querySelector('#selectGeneros [value="<%=selectedOption %>"]').selected = true;
 

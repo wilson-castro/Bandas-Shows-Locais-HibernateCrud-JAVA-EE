@@ -57,7 +57,7 @@ ArrayList<Banda> bandas = (ArrayList<Banda>) request.getAttribute("bandas");
 				<td><%=banda.getIdBanda()%></td>
 				<td><%=banda.getNome()%></td>
 				<td><%=banda.getGenero()%></td>
-				<td><%=2%></td>
+				<td><%=banda.getNumShows()%></td>
 				<td>
 					<a href="select?idcon=<%= banda.getIdBanda() %>" class="Botao1">Editar</a>
 					<a href="javascript: confirmar(<%= banda.getIdBanda() %>)" class="Botao2">Excluir</a>
@@ -68,5 +68,6 @@ ArrayList<Banda> bandas = (ArrayList<Banda>) request.getAttribute("bandas");
 			%>
 		</tbody>
 	</table>
+	<script src="scripts/confirmador.js"></script>
 </body>
 </html>

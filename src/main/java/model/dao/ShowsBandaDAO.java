@@ -2,10 +2,12 @@ package model.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import jdbc.ConnectionFactory;
 import model.beans.ShowBanda;
+import model.enums.Genero;
 
 public class ShowsBandaDAO {
 	private Connection connection;
@@ -29,7 +31,33 @@ public class ShowsBandaDAO {
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
+		
 	}
+	
+	public int countShowPorBanda(int idBanda) {
+		String sql = "select count(*) from projeto.showsPorBanda where banda_id=?";
+		int count = 0;
+        try {        	
+            PreparedStatement stmt = connection.prepareStatement(sql);
+            stmt.setInt(1, idBanda);
+            ResultSet rs = stmt.executeQuery();
+            
+            while (rs.next()) {
+            	
+            count = rs.getInt(1);
+            	
+            }
+            rs.close();
+            stmt.close();
+            
+            return count;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+	
+	
 	
 	/*public ArrayList<ShowBanda> listarShowBanda() {
 		String sql = "select * from bandas order by id_banda";

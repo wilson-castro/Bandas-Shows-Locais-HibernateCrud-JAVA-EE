@@ -4,11 +4,12 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 import jdbc.ConnectionFactory;
 import model.beans.Banda;
+import model.beans.ShowBanda;
 import model.enums.Genero;
 
 public class BandaDAO {
@@ -18,25 +19,42 @@ public class BandaDAO {
 		this.connection = new ConnectionFactory().getConnection();
 	}
 	
-	public void adicionarBanda(Banda banda) {
+	public void adicionarBanda(Banda banda, int showsIds[]) {
+		ShowBanda sb = new ShowBanda();
+		ShowsBandaDAO dao = new ShowsBandaDAO();
 		
 		String sql = "INSERT INTO bandas(nome,genero) VALUES(?,?)";
 		
 		try {
-			PreparedStatement stmt = connection.prepareStatement(sql);
+			PreparedStatement stmt = connection.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
 
 			stmt.setString(1, banda.getNome());
 			stmt.setString(2, banda.getGenero().toString());
 			
 			stmt.executeUpdate();
+			ResultSet rs = stmt.getGeneratedKeys();
+
+			if (rs.next()) {
+				sb.setId_banda(rs.getInt(1));
+			}
+			
+			rs.close();
 			stmt.close();
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
+		}
+		
+		if(showsIds != null) {
+			for(int i=0; i< showsIds.length; i++) {
+				sb.setId_show(showsIds[i]);
+				dao.adicionar(sb);
+			}
 		}
 	}
 	
 	public ArrayList<Banda> listarBandas() {
 		String sql = "select * from bandas order by id_banda";
+		ShowsBandaDAO sb = new ShowsBandaDAO();
 		
         try {
         	ArrayList<Banda> bandas = new ArrayList<Banda>();
@@ -53,6 +71,11 @@ public class BandaDAO {
             	banda.setIdBanda(rs.getInt("id_banda"));
                 banda.setNome(rs.getString("nome"));
                 banda.setGenero(genero);
+                
+                int numShows = 0;
+                numShows = sb.countShowPorBanda(banda.getIdBanda());
+                
+                banda.setNumShows(numShows);
                 		
                 // adicionando o objeto à lista
                 bandas.add(banda);

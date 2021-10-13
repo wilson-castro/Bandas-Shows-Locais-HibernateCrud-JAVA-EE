@@ -79,8 +79,13 @@ h1 {
 	cursor: pointer;
 }
 
+h5{
+	margin-top:10px;
+	margin-bottom:5px;
+}
+
 .group-checkbox{
-	margin-top:5px;
+	margin-bottom:8px;
 }
 
 .Botao1 {
