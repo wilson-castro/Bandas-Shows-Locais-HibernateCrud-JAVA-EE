@@ -232,12 +232,9 @@ public class BandaDAO {
 			
 			stmt.setInt(1, banda.getIdBanda());
 			
-			
 		    stmt.executeUpdate();
 			stmt.close();
 						
-
-			
         }catch(SQLException e) {
             throw new RuntimeException(e);
         }

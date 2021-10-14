@@ -184,4 +184,22 @@ public class ShowsBandaDAO {
         
 	}
 	
+	public void deletarBandaPorShow(int idShow) {
+        String sql = "delete from showsPorBanda where show_id=?";
+                
+        try {        	
+			PreparedStatement stmt = connection.prepareStatement(sql);
+		
+			stmt.setInt(1, idShow);
+			
+			stmt.execute();
+			stmt.close();
+		
+					
+        }catch(SQLException e) {
+            throw new RuntimeException(e);
+        }
+        
+	}
+	
 }

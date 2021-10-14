@@ -7,6 +7,7 @@ public class ShowsLocal {
 	private String data_show;
 	private String lugar_nome;
 	private int capacidade;
+	private int numBandas;
 	
 	public int getId() {
 		return id;
@@ -43,6 +44,12 @@ public class ShowsLocal {
 	}
 	public void setCapacidade(int capacidade) {
 		this.capacidade = capacidade;
+	}
+	public int getNumBandas() {
+		return numBandas;
+	}
+	public void setNumBandas(int numBandas) {
+		this.numBandas = numBandas;
 	}
 	
 	

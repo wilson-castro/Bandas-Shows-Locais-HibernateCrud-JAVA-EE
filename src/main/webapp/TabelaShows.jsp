@@ -16,19 +16,16 @@ ArrayList<ShowsLocal> shows = (ArrayList<ShowsLocal>) request.getAttribute("show
 <body>
 	<h1>Lista de shows</h1>
 	<a href="FormControlShows?operation=novo" class="Botao1">Novo</a>
-
-		<form name="form" action="insert">		
-			
+		
+		<form name="form" method="POST" action="ListarShows">
 			<div class="filtros">
 			
-				<div id="inputNome">
-					<input type="text" name="nome" placeholder="Digite um lugar..." class="Caixa2">
-					<input type="button" value="Pesquisar" class="Botao1" onclick="validar()">
-					
-				</div>
+					<div id="inputNome">
+						<input type="text" name="nomeLugar" placeholder="Digite um lugar..." class="Caixa2">
+						<input type="submit" value="Pesquisar" class="Botao1">
+					</div>
 				
 			</div>
-				
 		</form>
 
 	<table id="tabela">
@@ -37,6 +34,7 @@ ArrayList<ShowsLocal> shows = (ArrayList<ShowsLocal>) request.getAttribute("show
 				<th>ID</th>
 				<th>ONDE</th>
 				<th>Data do Show</th>
+				<th>Nº de Bandas</th>
 				<th>Capacidade</th>
 				<th>Ações</th>
 			</tr>
@@ -49,10 +47,11 @@ ArrayList<ShowsLocal> shows = (ArrayList<ShowsLocal>) request.getAttribute("show
 				<td><%=show.getShow_Id()%></td>
 				<td><%=show.getLugar_nome()%></td>
 				<td><%=show.getData_show()%></td>
+				<td><%=show.getNumBandas() %></td>
 				<td><%=show.getCapacidade()%></td>
 				<td>
 					<a href="select?idBanda=<%= show.getShow_Id() %>" class="Botao1">Editar</a>
-					<a href="javascript: confirmar(<%= show.getShow_Id() %>)" class="Botao2">Excluir</a>
+					<a href="javascript: confirmarShow(<%= show.getShow_Id() %>)" class="Botao2">Excluir</a>
 				</td>
 			</tr>
 			<%

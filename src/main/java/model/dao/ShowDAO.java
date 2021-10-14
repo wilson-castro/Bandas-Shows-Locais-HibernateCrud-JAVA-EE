@@ -129,9 +129,17 @@ public class ShowDAO {
 	
 	public void deletarShow(Show show) {
         String sql = "DELETE FROM shows where id_show=?";
-        
+    	ShowsBandaDAO sb = new ShowsBandaDAO();
+
         try {        	
 			PreparedStatement stmt = connection.prepareStatement(sql);
+			
+			int qtdBandas = 0;
+			qtdBandas = sb.countBandaPorShow(qtdBandas);
+			
+			if (qtdBandas>0) {
+				sb.deletarShowPorBanda(show.getIdShow());
+			}
 			
 			stmt.setInt(1, show.getIdShow());
 			
