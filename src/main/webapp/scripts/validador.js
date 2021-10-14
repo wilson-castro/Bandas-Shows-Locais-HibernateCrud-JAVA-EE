@@ -3,8 +3,8 @@
  */
 
 function validar() {
-	let nome = frmContato.nome.value;
-	let genero = frmContato.selectGeneros.value;
+	let nome = form.nome.value;
+	let genero = form.selectGeneros.value;
 	
 	const queryString = window.location.search;
 	const urlParams = new URLSearchParams(queryString);
@@ -12,14 +12,14 @@ function validar() {
 	
 	if (nome === "") {
 		alert("Preencha  o campo 'Nome'")
-		frmContato.nome.focus();
+		form.nome.focus();
 		return false;
 	} else if (genero === "-selecione-") {
 		alert("Preencha o campo 'Genero'")
-		frmContato.selectGeneros.focus();
+		form.selectGeneros.focus();
 		return false;
 	} else {
-		operation ==="novo"? (document.forms["frmContato"].submit()) : alert('editar')
+		operation ==="novo"? (document.forms["form"].submit()) : alert('editar')
 		
 	}
 }

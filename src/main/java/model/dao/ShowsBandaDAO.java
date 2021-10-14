@@ -57,6 +57,28 @@ public class ShowsBandaDAO {
         }
     }
 	
+	public int countBandaPorShow(int idShow) {
+		String sql = "select count(*) from projeto.showsPorBanda where show_id=?";
+		int count = 0;
+        try {        	
+            PreparedStatement stmt = connection.prepareStatement(sql);
+            stmt.setInt(1, idShow);
+            ResultSet rs = stmt.executeQuery();
+            
+            while (rs.next()) {
+            	
+            count = rs.getInt(1);
+            	
+            }
+            rs.close();
+            stmt.close();
+            
+            return count;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 	
 	
 	/*public ArrayList<ShowBanda> listarShowBanda() {

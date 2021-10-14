@@ -16,13 +16,13 @@ ArrayList<Banda> bandas = (ArrayList<Banda>) request.getAttribute("bandas");
 	<h1>Lista de bandas</h1>
 		<a href="FormControlBandas?operation=novo" class="Botao1">Novo</a>
 
-		<form name="frmContato" action="insert">		
+		<form name="form" action="insert">		
 			
 			<div class="filtros">
 			
 				<div id="inputNome">
 					<input type="text" name="nome" placeholder="Digite um nome..." class="Caixa2">
-					<input type="button" value="Pesquisar" class="Botao1" onclick="validar()">
+		<a href="FormControlBandas?operation=novo" class="Botao1">Pesquisar</a>
 					
 				</div>
 				
@@ -59,7 +59,7 @@ ArrayList<Banda> bandas = (ArrayList<Banda>) request.getAttribute("bandas");
 				<td><%=banda.getGenero()%></td>
 				<td><%=banda.getNumShows()%></td>
 				<td>
-					<a href="select?idcon=<%= banda.getIdBanda() %>" class="Botao1">Editar</a>
+					<a href="select?idBanda=<%= banda.getIdBanda() %>" class="Botao1">Editar</a>
 					<a href="javascript: confirmar(<%= banda.getIdBanda() %>)" class="Botao2">Excluir</a>
 				</td>
 			</tr>

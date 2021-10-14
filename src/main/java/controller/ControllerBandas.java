@@ -14,7 +14,7 @@ import model.dao.BandaDAO;
 import model.enums.Genero;
 
 
-@WebServlet(urlPatterns = { "/ControllerBandas", "/bandas", "/bandas/insert" })
+@WebServlet(urlPatterns = { "/ControllerBandas", "/bandas", "/bandas/insert", "/bandas/delete" })
 public class ControllerBandas extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	BandaDAO dao = new BandaDAO();
@@ -34,15 +34,14 @@ public class ControllerBandas extends HttpServlet {
 		if (action.equals("/bandas")) {
 			bandas(request, response);
 		}else if (action.equals("/bandas/insert")) {
-			//response.getWriter().append("Served at: ").append(request.getContextPath());
-
 			novaBanda(request, response);
-		} /*else
-			 * if (action.equals("/select")) { listarContato(request, response); } else if
-			 * (action.equals("/update")) { editarContato(request, response); } else if
-			 * (action.equals("/delete")) { removerContato(request, response); }
-			 */
-		else {
+		} else if (action.equals("/select")) {
+			//listarContato(request, response); 
+		}else if(action.equals("/update")) {
+			//editarContato(request, response);
+		}else if(action.equals("/bandas/delete")) {
+			removerContato(request, response);
+		}else {
 			response.sendRedirect("index.jsp");
 		}
 	}
@@ -81,5 +80,17 @@ public class ControllerBandas extends HttpServlet {
 		}
 		
 		response.sendRedirect("/projeto/bandas");
+	}
+	
+	protected void removerContato(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		int idBanda = Integer.parseInt(request.getParameter("idBanda"));
+
+		banda.setIdBanda(idBanda);
+
+		dao.deletarBanda(banda);
+	
+		response.sendRedirect("/projeto/bandas");
+
 	}
 }

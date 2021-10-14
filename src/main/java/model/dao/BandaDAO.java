@@ -63,7 +63,6 @@ public class BandaDAO {
             ResultSet rs = stmt.executeQuery();
 
             while (rs.next()) {
-                // criando o objeto Contato
             	String generoString = rs.getString("genero");
             	Banda banda = new Banda();
             	Genero genero = Genero.valueOf(generoString);

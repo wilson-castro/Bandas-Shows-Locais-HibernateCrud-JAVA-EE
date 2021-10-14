@@ -33,6 +33,10 @@ public class ShowsLocalDAO {
 		}
 	}
 	
+	public void delete(int idBanda) {
+		String sql ="DELETE";
+	}
+	
 	public ArrayList<ShowsLocal> listarShowPorLocal() {
 		String sql = "select"
 				+ " id_show as ID_Show,id_local as ID_Local, "

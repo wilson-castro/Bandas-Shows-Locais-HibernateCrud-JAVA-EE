@@ -41,6 +41,7 @@ public class ShowDAO {
 	
 	public ArrayList<Show> listarShows() {
 		String sql = "select * from shows order by id_show";
+		ShowsBandaDAO sb = new ShowsBandaDAO();
 
         try {
         	ArrayList<Show> shows = new ArrayList<Show>();
@@ -49,7 +50,6 @@ public class ShowDAO {
             ResultSet rs = stmt.executeQuery();
 
             while (rs.next()) {
-                // criando o objeto Contato
             	Show show = new Show();
             	
             	show.setIdLocal(rs.getInt("local_id"));
@@ -59,6 +59,10 @@ public class ShowDAO {
                   data.setTime(rs.getDate("data"));
                   show.setData(data);
                 		
+                  int numBandas = 0;
+                  numBandas = sb.countBandaPorShow(show.getIdShow());
+                  
+                  show.setNumBandas(numBandas);                  
                 // adicionando o objeto à lista
                 shows.add(show);
             }

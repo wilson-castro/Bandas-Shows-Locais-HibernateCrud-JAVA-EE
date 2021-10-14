@@ -2,9 +2,9 @@
  * 
  */
 
-function confirmar(idcon) {
+function confirmar(idBanda) {
 	let resposta = confirm("Confirma a exclusão deste contato?")
 	if (resposta === true) {
-		window.location.href = "delete?idcon=" + idcon
+		window.location.href = "bandas/delete?idBanda=" + idBanda
 	}
 }

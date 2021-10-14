@@ -10,29 +10,30 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 
-@WebServlet(urlPatterns = { "/ControllerShows", "/shows" })
-public class ControllerShows extends HttpServlet {
+@WebServlet(urlPatterns = { "/ControllerLocais", "/locais" })
+public class ControllerLocais extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-
-    public ControllerShows() {
+   
+    public ControllerLocais() {
         super();
     }
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String action = request.getServletPath();
 
-		if (action.equals("/shows")) {
-			shows(request, response);
+		if (action.equals("/locais")) {
+			locais(request, response);
 		}
 	}
-	
-	protected void shows(HttpServletRequest request, HttpServletResponse response)
+
+	protected void locais(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		RequestDispatcher rd = request.getRequestDispatcher("/ListarShows");
+		RequestDispatcher rd = request.getRequestDispatcher("/ListarLocais");
 		rd.forward(request, response);
 
 	}
-
+ 
 }

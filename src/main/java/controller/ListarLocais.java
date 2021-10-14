@@ -1,6 +1,7 @@
 package controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -9,30 +10,33 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import model.beans.Show;
+import model.beans.ShowsLocal;
+import model.dao.ShowsLocalDAO;
 
-@WebServlet(urlPatterns = { "/ControllerShows", "/shows" })
-public class ControllerShows extends HttpServlet {
+
+@WebServlet("/ListarLocais")
+public class ListarLocais extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 
-    public ControllerShows() {
+    public ListarLocais() {
         super();
     }
 
+
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String action = request.getServletPath();
+		ShowsLocalDAO showDao = new ShowsLocalDAO();
+		
+		/*
+    	ArrayList<ShowsLocal> listaShows = showDao.listarShowPorLocal();
+		
+		ArrayList<Show> shows = dao.listarShows()
+		*/
 
-		if (action.equals("/shows")) {
-			shows(request, response);
-		}
-	}
-	
-	protected void shows(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-
-		RequestDispatcher rd = request.getRequestDispatcher("/ListarShows");
+		//request.setAttribute("shows", listaShows);
+		RequestDispatcher rd = request.getRequestDispatcher("TabelaLocais.jsp");
 		rd.forward(request, response);
-
 	}
 
 }

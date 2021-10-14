@@ -6,9 +6,8 @@
 ArrayList<ShowsLocal> listashows = (ArrayList<ShowsLocal>) request.getAttribute("shows");
 
 String titulo = request.getAttribute("titulo").toString();
-String placeHolderInput = request.getAttribute("defaultInput").toString();
 String selectedOption = request.getAttribute("selected").toString();
-String textoBotao = request.getAttribute("txtBotao").toString();
+String dataDefault = request.getAttribute("dataDefault").toString();
 %>
 <!DOCTYPE html>
 <html>
@@ -18,24 +17,19 @@ String textoBotao = request.getAttribute("txtBotao").toString();
 <link rel="stylesheet" href="styles/styles.css">
 </head>
 <body>
-	<h1><%=titulo %> banda</h1>
+	<h1><%=titulo %> show</h1>
 
-	<form name="form" action="bandas/insert">
+	<form name="form" action="shows/insert">
 		
 		<div class="formComponentes">
-			<input type="text" name="nome" required placeholder="<%=placeHolderInput%>"
+			<input type=date name="data" min="2020-10-13" value="<%=dataDefault %>"
 				class="Caixa2">
 			<select id="selectGeneros" required name="selectGeneros">
 				<option value="-selecione-">Selecione Genero</option>
-				<option value="ROCK" >ROCK</option>
-				<option value="FORRO">FORRÓ</option>
-				<option value=AXE>AXÉ</option>
-			</select>
-					
-			<h5>Shows</h5>
-			<div class="group-checkbox">
 				<% if(titulo.equals("Criar")){
 					for(ShowsLocal show : listashows){ %>
+					<option value=<%= show.getShow_Id() %> >ROCK</option>
+					
 					<input type="checkbox" id="<%=show.getShow_Id() %>" name="List_ShowsIDs" value=<%= show.getShow_Id() %>>
 					<label for="<%= show.getShow_Id() %>">
 					<strong>ID</strong>: <%= show.getShow_Id() %> -
@@ -45,17 +39,18 @@ String textoBotao = request.getAttribute("txtBotao").toString();
 					  </label><br>
 				<%} 
 				}%>
+			</select>
 					
-			</div>
+			<h5>Shows</h5>
 		</div>
 		
 		
-		<input type="button" value="<%=textoBotao %>" class="Botao1"
+		<input type="button" value="Criar" class="Botao1"
 			onclick="validar()">
 	</form>
 	<script src="scripts/validador.js"></script>
 	<script>
-	document.querySelector('#selectGeneros [value="<%=selectedOption %>"]').selected = true;
+	//document.querySelector('#selectGeneros [value="<%=selectedOption %>"]').selected = true;
 
 	</script>
 </body>

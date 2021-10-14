@@ -8,8 +8,8 @@ import java.util.Date;
 public class Show {
 	private int idShow;
 	private Calendar data;
-	private Banda[] bandas;
 	private int idLocal;
+	private int numBandas;
 	
 	public void setIdShow(int idShow) {
 		this.idShow = idShow;
@@ -43,17 +43,17 @@ public class Show {
 		this.data = data;
 	}
 	
-	public Banda[] getBandas() {
-		return bandas;
-	}
-	public void setBandas(Banda[] bandas) {
-		this.bandas = bandas;
-	}
 	public int getIdLocal() {
 		return idLocal;
 	}
 	public void setIdLocal(int idLocal) {
 		this.idLocal = idLocal;
+	}
+	public int getNumBandas() {
+		return numBandas;
+	}
+	public void setNumBandas(int numBandas) {
+		this.numBandas = numBandas;
 	}
 	
 	
