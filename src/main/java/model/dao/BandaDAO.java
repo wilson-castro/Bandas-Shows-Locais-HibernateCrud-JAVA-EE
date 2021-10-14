@@ -222,11 +222,11 @@ public class BandaDAO {
 		
         try {        	
 			PreparedStatement stmt = connection.prepareStatement(sql);
-		   
-			int qtdShows = 0;
-			qtdShows = sb.countShowPorBanda(banda.getIdBanda());
 			
-			if (qtdShows>0) {
+			int qtdBandas = 0;
+			qtdBandas = sb.countBandaPorShow(banda.getIdBanda());
+			
+			if (qtdBandas>0) {
 				sb.deletarShowPorBanda(banda.getIdBanda());
 			}
 			

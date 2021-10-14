@@ -148,10 +148,10 @@ public class ShowDAO {
         try {        	
 			PreparedStatement stmt = connection.prepareStatement(sql);
 			
-			int qtdBandas = 0;
-			qtdBandas = sb.countBandaPorShow(qtdBandas);
+			int qtdShows = 0;
+			qtdShows = sb.countShowPorBanda(show.getIdShow());
 			
-			if (qtdBandas>0) {
+			if (qtdShows>0) {
 				sb.deletarShowPorBanda(show.getIdShow());
 			}
 			

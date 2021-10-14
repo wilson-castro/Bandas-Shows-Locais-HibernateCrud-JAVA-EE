@@ -18,7 +18,7 @@ public class LocalDAO {
 	public LocalDAO() {
 		this.connection = new ConnectionFactory().getConnection();
 	}
-	
+		
 	public void adicionarLocal(Local local, int idShow) {
 		ShowBanda sb = new ShowBanda();
 		ShowsBandaDAO dao = new ShowsBandaDAO();

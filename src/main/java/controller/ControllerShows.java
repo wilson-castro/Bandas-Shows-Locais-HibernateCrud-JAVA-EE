@@ -79,10 +79,8 @@ public class ControllerShows extends HttpServlet {
 
 		show.setIdShow(idShow);
 		
-		//dao.deletarShow(show);
-		
-		System.out.println("Deletando: "+ request.getParameter("idShow"));
-	
+		dao.deletarShow(show);
+			
 		response.sendRedirect("/projeto/shows");
 
 	}
