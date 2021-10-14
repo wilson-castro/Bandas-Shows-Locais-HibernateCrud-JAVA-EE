@@ -25,7 +25,7 @@ public class Show {
 		Calendar dataConvertida = null;	
 		
 		try {
-            Date date = new SimpleDateFormat("dd/MM/yyyy")
+            Date date = new SimpleDateFormat("yyyy-MM-dd")
                   .parse(data);
             dataConvertida = Calendar.getInstance();
             dataConvertida.setTime(date);

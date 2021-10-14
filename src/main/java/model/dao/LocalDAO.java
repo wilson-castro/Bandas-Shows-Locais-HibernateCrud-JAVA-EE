@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 import jdbc.ConnectionFactory;
 import model.beans.Local;
+import model.beans.ShowBanda;
 import model.beans.ShowsLocal;
 
 public class LocalDAO {
@@ -19,8 +20,9 @@ public class LocalDAO {
 	}
 	
 	public void adicionarLocal(Local local, int idShow) {
-		
-		ShowsLocal showlocal = new ShowsLocal();
+		ShowBanda sb = new ShowBanda();
+		ShowsBandaDAO dao = new ShowsBandaDAO();
+
 		String sql = "INSERT INTO locais(nome_local,capacidade) VALUES(?,?)";
 		
 		try {
@@ -33,7 +35,7 @@ public class LocalDAO {
 			ResultSet rs = stmt.getGeneratedKeys();
 			
 			if (rs.next()) {
-				showlocal.setLocal_Id(rs.getInt(1));
+				sb.setId_banda(idShow);
 			}
 
 			rs.close();
@@ -44,9 +46,8 @@ public class LocalDAO {
 		
 		if(idShow>0) {
 			ShowsLocalDAO sl = new ShowsLocalDAO();
-			
-			showlocal.setShow_Id(idShow);
-			sl.adicionar(showlocal);
+			sb.setId_banda(idShow);
+			dao.adicionar(sb);
 		}
 	}
 	
@@ -60,14 +61,13 @@ public class LocalDAO {
             ResultSet rs = stmt.executeQuery();
 
             while (rs.next()) {
-                // criando o objeto Contato
+
             	Local local = new Local();
             	
             	local.setIdLocal(rs.getInt("id_local"));
             	local.setNome(rs.getString("nome_local"));
             	local.setCapacidade(rs.getInt("capacidade"));
                 		
-                // adicionando o objeto à lista
                 locais.add(local);
             }
             

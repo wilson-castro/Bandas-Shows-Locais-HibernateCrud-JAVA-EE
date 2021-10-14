@@ -129,6 +129,11 @@ h5{
 	flex-direction:row;
 }
 
+.ID-group .Caixa2{
+	width:190px;
+}
+
+
 #tabela {
 	margin-top: 20px;
 	border-collapse: collapse;

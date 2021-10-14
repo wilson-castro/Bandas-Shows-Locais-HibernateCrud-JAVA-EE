@@ -32,7 +32,6 @@ for(ShowsLocal sl : listashows){
 	}
 }
 
-
 %>
 <!DOCTYPE html>
 <html>

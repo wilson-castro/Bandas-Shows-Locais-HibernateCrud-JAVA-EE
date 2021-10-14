@@ -2,12 +2,20 @@
 	pageEncoding="UTF-8"%>
 <%@ page import="java.util.ArrayList"%>
 <%@ page import="model.beans.ShowsLocal"%>
+<%@ page import="model.beans.Local"%>
+<%@ page import="model.beans.Banda"%>
+
 <%
-ArrayList<ShowsLocal> listashows = (ArrayList<ShowsLocal>) request.getAttribute("shows");
+
+ArrayList<Local> listaLocais = (ArrayList) request.getAttribute("locais");
+ArrayList<Banda> listaBandas = (ArrayList) request.getAttribute("bandas");
 
 String titulo = request.getAttribute("titulo").toString();
 String selectedOption = request.getAttribute("selected").toString();
 String dataDefault = request.getAttribute("dataDefault").toString();
+String actionForm  = request.getAttribute("actionForm").toString();
+String textoBotao = request.getAttribute("txtBotao").toString();
+
 %>
 <!DOCTYPE html>
 <html>
@@ -19,39 +27,50 @@ String dataDefault = request.getAttribute("dataDefault").toString();
 <body>
 	<h1><%=titulo %> show</h1>
 
-	<form name="form" action="shows/insert">
+	<form name="form" action="<%=actionForm%>">
 		
 		<div class="formComponentes">
-			<input type=date name="data" min="2020-10-13" value="<%=dataDefault %>"
-				class="Caixa2">
-			<select id="selectGeneros" required name="selectGeneros">
-				<option value="-selecione-">Selecione Genero</option>
-				<% if(titulo.equals("Criar")){
-					for(ShowsLocal show : listashows){ %>
-					<option value=<%= show.getShow_Id() %> >ROCK</option>
+				
+			<div class="ID-group">
+					<input type=date id="data" name="data" min="<%=dataDefault %>" value="<%=dataDefault %>"
+						class="Caixa2">
+			</div>
 					
-					<input type="checkbox" id="<%=show.getShow_Id() %>" name="List_ShowsIDs" value=<%= show.getShow_Id() %>>
-					<label for="<%= show.getShow_Id() %>">
-					<strong>ID</strong>: <%= show.getShow_Id() %> -
-					<strong>Lugar</strong>: <%= show.getLugar_nome() %> -
-					<strong>Data</strong>: <%= show.getData_show() %> -
-					<strong>Capacidade</strong>: <%= show.getCapacidade() %> 
-					  </label><br>
-				<%} 
-				}%>
+			<select id="selectLocais" required name="selectLocais">
+				<option value="-selecione-">Selecione o Local</option>
+				<% for(Local local : listaLocais) { %>
+					<option value="<%=local.getIdLocal() %>" >
+					<%=local.getIdLocal() %> - 
+					<%=local.getNome() %> - 
+					<%=local.getCapacidade() %></option>
+				<%} %>
 			</select>
+			
+			<h5>Bandas</h5>
+			<div class="group-checkbox">
+				<% for(Banda banda : listaBandas){ %>
+					<input type="checkbox"
+					 id="<%=banda.getIdBanda() %>"
+					 name="List_BandaIDs" value=<%= banda.getIdBanda() %>
+					>
+					<label for="<%= banda.getIdBanda() %>">
+						<strong>ID</strong>: <%= banda.getIdBanda() %> -
+						<strong>Nome</strong>: <%= banda.getNome() %> -
+						<strong>Genero</strong>: <%= banda.getGenero().getDescricao() %>
+   					</label><br>
+				<%}%>
 					
-			<h5>Shows</h5>
+			</div>
+			
 		</div>
 		
 		
-		<input type="button" value="Criar" class="Botao1"
-			onclick="validar()">
+		<input type="button" value="<%=textoBotao %>" class="Botao1"
+			onclick="validarShow()">
 	</form>
 	<script src="scripts/validador.js"></script>
 	<script>
-	//document.querySelector('#selectGeneros [value="<%=selectedOption %>"]').selected = true;
-
+	document.querySelector('#selectGeneros [value="<%=selectedOption %>"]').selected = true;
 	</script>
 </body>
 </html>

@@ -23,3 +23,25 @@ function validar() {
 		
 	}
 }
+
+function validarShow() {
+	let data = form.data.value;
+	let locais = form.selectLocais.value;
+	
+	const queryString = window.location.search;
+	const urlParams = new URLSearchParams(queryString);
+	const operation = urlParams.get('operation')
+	
+	if (data === "2020-10-13") {
+		alert("Preencha  o campo 'data'")
+		form.data.focus();
+		return false;
+	}if (locais === "-selecione-") {
+		alert("Preencha o campo 'Local'")
+		form.selectLocais.focus();
+		return false;
+	} else {
+		(document.forms["form"].submit());
+		
+	}
+}

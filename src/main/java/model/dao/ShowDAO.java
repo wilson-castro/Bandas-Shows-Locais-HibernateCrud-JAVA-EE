@@ -19,9 +19,10 @@ public class ShowDAO {
 		this.connection = new ConnectionFactory().getConnection();
 	}
 	
-	
-	public void adicionarShow(Show show,int idBanda) {
-		
+	public void adicionarShow(Show show, int bandasIds[]) {
+		ShowBanda sb = new ShowBanda();
+		ShowsBandaDAO dao = new ShowsBandaDAO();
+
 		String sql = "INSERT INTO shows(local_id,data) VALUES(?,?)";
 		
 		try {
@@ -32,9 +33,22 @@ public class ShowDAO {
                     show.getData().getTimeInMillis()));
 			
 			stmt.executeUpdate();
+			ResultSet rs = stmt.getGeneratedKeys();
+
+			if (rs.next()) {
+				sb.setId_show(rs.getInt(1));
+			}
+			
 			stmt.close();
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
+		}
+		
+		if(bandasIds != null) {
+			for(int i=0; i< bandasIds.length; i++) {
+				sb.setId_banda(bandasIds[i]);
+				dao.adicionar(sb);
+			}
 		}
 		
 	}
