@@ -18,7 +18,8 @@ public class BandaDAO {
 	public BandaDAO() {
 		this.connection = new ConnectionFactory().getConnection();
 	}
-	
+	ShowsBandaDAO sb = new ShowsBandaDAO();
+
 	public void adicionarBanda(Banda banda, int showsIds[]) {
 		ShowBanda sb = new ShowBanda();
 		ShowsBandaDAO dao = new ShowsBandaDAO();
@@ -52,9 +53,40 @@ public class BandaDAO {
 		}
 	}
 	
+	public void alterarBanda(Banda banda, int showsIds[]) {
+		ShowBanda sb = new ShowBanda();
+		ShowsBandaDAO dao = new ShowsBandaDAO();
+		
+        String sql = "UPDATE bandas SET nome=?, genero=? WHERE (id_banda = ?)";
+        
+        try {        	
+			PreparedStatement stmt = connection.prepareStatement(sql);
+			
+			stmt.setString(1, banda.getNome());
+			stmt.setString(2, banda.getGenero().toString());
+			stmt.setInt(3, banda.getIdBanda());
+
+			stmt.executeUpdate();
+			stmt.close();
+			
+        }catch(SQLException e) {
+            throw new RuntimeException(e);
+        }
+        
+        dao.deletarShowPorBanda(banda.getIdBanda());
+        
+       if(showsIds != null) {
+			for(int i=0; i< showsIds.length; i++) {
+				sb.setId_banda(banda.getIdBanda());
+				sb.setId_show(showsIds[i]);
+				dao.adicionar(sb);
+			}
+		}
+        
+	}
+	
 	public ArrayList<Banda> listarBandas() {
 		String sql = "select * from bandas order by id_banda";
-		ShowsBandaDAO sb = new ShowsBandaDAO();
 		
         try {
         	ArrayList<Banda> bandas = new ArrayList<Banda>();
@@ -76,7 +108,6 @@ public class BandaDAO {
                 
                 banda.setNumShows(numShows);
                 		
-                // adicionando o objeto à lista
                 bandas.add(banda);
             }
             
@@ -134,8 +165,12 @@ public class BandaDAO {
             	banda.setIdBanda(rs.getInt("id_banda"));
                 banda.setNome(rs.getString("nome"));
                 banda.setGenero(genero);
+                
+                int numShows = 0;
+                numShows = sb.countShowPorBanda(banda.getIdBanda());
+                
+                banda.setNumShows(numShows);
                 		
-                // adicionando o objeto à lista
                 bandas.add(banda);
             }
             
@@ -163,6 +198,10 @@ public class BandaDAO {
             	banda.setIdBanda(rs.getInt("id_banda"));
                 banda.setNome(rs.getString("nome"));
                 banda.setGenero(genero);
+                int numShows = 0;
+                numShows = sb.countShowPorBanda(banda.getIdBanda());
+                
+                banda.setNumShows(numShows);
 
 			}
 			
@@ -177,40 +216,33 @@ public class BandaDAO {
         
 	}
 	
-	public void alterarBanda(Banda banda) {
-        String sql = "update bandas SET nome=?, genero=? where id_banda=? ";
-        
-        try {        	
-			PreparedStatement stmt = connection.prepareStatement(sql);
-			
-			stmt.setString(1, banda.getNome());
-			stmt.setString(2, banda.getGenero().toString());
-			stmt.setInt(3, banda.getIdBanda());
-
-			stmt.executeUpdate();
-			stmt.close();
-			
-        }catch(SQLException e) {
-            throw new RuntimeException(e);
-        }
-        
-	}
-	
 	public void deletarBanda(Banda banda) {
         String sql = "delete from bandas where id_banda=?";
-        
+	
+		
         try {        	
 			PreparedStatement stmt = connection.prepareStatement(sql);
+		   
+			int qtdShows = 0;
+			qtdShows = sb.countShowPorBanda(banda.getIdBanda());
 			
+			if (qtdShows>0) {
+				sb.deletarShowPorBanda(banda.getIdBanda());
+			}
 			
 			stmt.setInt(1, banda.getIdBanda());
 			
-			stmt.executeUpdate();
+			
+		    stmt.executeUpdate();
 			stmt.close();
+						
+
 			
         }catch(SQLException e) {
             throw new RuntimeException(e);
         }
+        
+        
         
 	}
 	

@@ -119,8 +119,14 @@ h5{
 }
 
 #Caixa3 {
+	margin-left:5px;
+	width:50px;
 	padding: 5px;
 	border: 1px solid #ff0000;
+}
+.ID-group{
+	display: flex;
+	flex-direction:row;
 }
 
 #tabela {

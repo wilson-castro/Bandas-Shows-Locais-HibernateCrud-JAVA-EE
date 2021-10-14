@@ -19,7 +19,7 @@ function validar() {
 		form.selectGeneros.focus();
 		return false;
 	} else {
-		operation ==="novo"? (document.forms["form"].submit()) : alert('editar')
+		(document.forms["form"].submit());
 		
 	}
 }

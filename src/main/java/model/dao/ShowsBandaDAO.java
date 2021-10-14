@@ -4,10 +4,12 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 import jdbc.ConnectionFactory;
+import model.beans.Banda;
 import model.beans.ShowBanda;
-import model.enums.Genero;
 
 public class ShowsBandaDAO {
 	private Connection connection;
@@ -112,88 +114,30 @@ public class ShowsBandaDAO {
             throw new RuntimeException(e);
         }
     }
+	*/
 	
-	/*public ArrayList<Banda> listarBandasComFiltro(String nomeBanda,Genero[] generosFiltro)  {
-		String sql = "SELECT * FROM projeto.bandas WHERE nome LIKE ?";
-		int quantidadeGenerosFiltro = generosFiltro.length;
-		
-		if (quantidadeGenerosFiltro>0) {
-			sql+=" AND (";
-			
-			for (int i =0; i<quantidadeGenerosFiltro;i++) {
-				if (i==(quantidadeGenerosFiltro-1)) {
-					sql+="genero=? ";
-				}else {
-					sql+="genero=? OR ";
-				}
-			}
-			
-			sql+=")";
-		}
-		
-    	sql+= "ORDER BY id_banda";
-		
-        try {
-        	ArrayList<Banda> bandas = new ArrayList<Banda>();
-        	
-            PreparedStatement stmt = connection.prepareStatement(sql);
-            stmt.setString(1, "%"+nomeBanda+"%");
-            
-            if (quantidadeGenerosFiltro>0) {
-            	for (int i =0; i<quantidadeGenerosFiltro;i++) {
-    				stmt.setString((i+2), generosFiltro[i].toString());
-    			}
-    		}
-            
-            System.out.println(stmt.toString());
-            
-            ResultSet rs = stmt.executeQuery();
-
-            while (rs.next()) {
-                // criando o objeto Contato
-                String generoString = rs.getString("genero");
-            	Banda banda = new Banda();
-            	Genero genero = Genero.valueOf(generoString);
-            	
-            	banda.setIdBanda(rs.getInt("id_banda"));
-                banda.setNome(rs.getString("nome"));
-                banda.setGenero(genero);
-                		
-                // adicionando o objeto à lista
-                bandas.add(banda);
-            }
-            
-            rs.close();
-            stmt.close();
-            
-            return bandas;
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-	
-	public Banda selecionarBanda(Banda banda) {
-        String sql = "select * from bandas where id_banda=?";
+	public ArrayList<ShowBanda> selecionarShowsPorBanda(ShowBanda show) {
+        String sql = "select * from showsPorBanda where banda_id=?";
         
-        try {        	
+        try {
+        	ArrayList<ShowBanda> shows = new ArrayList<ShowBanda>();
+
 			PreparedStatement stmt = connection.prepareStatement(sql);
-			stmt.setInt(1, banda.getIdBanda());
+			stmt.setInt(1, show.getId_banda());
 			ResultSet rs = stmt.executeQuery();
 			
 			while(rs.next()) {
-				String generoString = rs.getString("genero");
-            	Genero genero = Genero.valueOf(generoString);
-            	
-            	banda.setIdBanda(rs.getInt("id_banda"));
-                banda.setNome(rs.getString("nome"));
-                banda.setGenero(genero);
-
+				ShowBanda sb = new ShowBanda();
+				sb.setId_banda(rs.getInt("banda_id"));
+				sb.setId(rs.getInt("id"));
+				sb.setId_show(rs.getInt("show_id"));
+				shows.add(sb);
 			}
 			
 			rs.close();
             stmt.close();
             
-			return banda;
+			return shows;
 			
         }catch(SQLException e) {
             throw new RuntimeException(e);
@@ -201,7 +145,9 @@ public class ShowsBandaDAO {
         
 	}
 	
-	public void alterarBanda(Banda banda) {
+	
+	
+	/*public void alterarBanda(Banda banda) {
         String sql = "update bandas SET nome=?, genero=? where id_banda=? ";
         
         try {        	
@@ -218,24 +164,24 @@ public class ShowsBandaDAO {
             throw new RuntimeException(e);
         }
         
-	}
+	}*/
 	
-	public void deletarBanda(Banda banda) {
-        String sql = "delete from bandas where id_banda=?";
-        
+	public void deletarShowPorBanda(int idBanda) {
+        String sql = "delete from showsPorBanda where banda_id=?";
+                
         try {        	
 			PreparedStatement stmt = connection.prepareStatement(sql);
+		
+			stmt.setInt(1, idBanda);
 			
-			
-			stmt.setInt(1, banda.getIdBanda());
-			
-			stmt.executeUpdate();
+			stmt.execute();
 			stmt.close();
-			
+		
+					
         }catch(SQLException e) {
             throw new RuntimeException(e);
         }
         
-	}*/
+	}
 	
 }

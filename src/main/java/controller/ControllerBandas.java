@@ -14,11 +14,10 @@ import model.dao.BandaDAO;
 import model.enums.Genero;
 
 
-@WebServlet(urlPatterns = { "/ControllerBandas", "/bandas", "/bandas/insert", "/bandas/delete" })
+@WebServlet(urlPatterns = { "/ControllerBandas", "/bandas", "/bandas/insert","/bandas/select","/bandas/update", "/bandas/delete" })
 public class ControllerBandas extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	BandaDAO dao = new BandaDAO();
-	Banda banda = new Banda();
 	
 	
 	public ControllerBandas() {
@@ -31,17 +30,18 @@ public class ControllerBandas extends HttpServlet {
 
 		String action = request.getServletPath();
 
-		if (action.equals("/bandas")) {
+		if (action.equals("/bandas")){			
 			bandas(request, response);
 		}else if (action.equals("/bandas/insert")) {
 			novaBanda(request, response);
-		} else if (action.equals("/select")) {
-			//listarContato(request, response); 
-		}else if(action.equals("/update")) {
-			//editarContato(request, response);
+		}else if(action.equals("/bandas/update")) {
+			editarBanda(request, response);
 		}else if(action.equals("/bandas/delete")) {
-			removerContato(request, response);
-		}else {
+			removerBanda(request, response);
+		}else if(action.equals("/bandas/pesquisar")) {
+			System.out.println("pesquisar");
+		}
+		else {
 			response.sendRedirect("index.jsp");
 		}
 	}
@@ -54,8 +54,40 @@ public class ControllerBandas extends HttpServlet {
 
 	}
 	
+	protected void editarBanda(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		Banda banda = new Banda();
+
+		int idBanda = Integer.parseInt(request.getParameter("idBanda"));
+		String nome = request.getParameter("nome");
+		String generoString = request.getParameter("selectGeneros");
+    	Genero genero = Genero.valueOf(generoString);
+		
+    	banda.setIdBanda(idBanda);
+    	banda.setGenero(genero);
+		banda.setNome(nome);
+				
+		if (request.getParameterValues("List_ShowsIDs") == null ) {
+			dao.alterarBanda(banda, null);
+	
+		}else {
+			String[] checkboxIdsList = request.getParameterValues("List_ShowsIDs");
+			int size = checkboxIdsList.length;
+						
+			int[] idsList = new int[size];
+			
+			for (int i = 0; i < size; i++) {
+			    idsList[i] = Integer.parseInt(checkboxIdsList[i]);
+			}
+			dao.alterarBanda(banda, idsList);
+		}
+		
+		response.sendRedirect("/projeto/bandas");
+	}
+	
 	protected void novaBanda(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		Banda banda = new Banda();
 		
 		String nome = request.getParameter("nome");
 		String generoString = request.getParameter("selectGeneros");
@@ -82,9 +114,10 @@ public class ControllerBandas extends HttpServlet {
 		response.sendRedirect("/projeto/bandas");
 	}
 	
-	protected void removerContato(HttpServletRequest request, HttpServletResponse response)
+	protected void removerBanda(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		int idBanda = Integer.parseInt(request.getParameter("idBanda"));
+		Banda banda = new Banda();
 
 		banda.setIdBanda(idBanda);
 
