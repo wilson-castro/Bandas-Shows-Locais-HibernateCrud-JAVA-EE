@@ -1,20 +1,37 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ page import="java.util.ArrayList"%>
+<%@ page import="model.beans.ShowBanda"%>
 <%@ page import="model.beans.ShowsLocal"%>
 <%@ page import="model.beans.Local"%>
 <%@ page import="model.beans.Banda"%>
 
 <%
 
+ArrayList<ShowBanda> listaShowBanda = new ArrayList<ShowBanda>();
 ArrayList<Local> listaLocais = (ArrayList) request.getAttribute("locais");
 ArrayList<Banda> listaBandas = (ArrayList) request.getAttribute("bandas");
+ArrayList<Integer> idsIguaisShows = new ArrayList<>();
 
 String titulo = request.getAttribute("titulo").toString();
 String selectedOption = request.getAttribute("selected").toString();
 String dataDefault = request.getAttribute("dataDefault").toString();
 String actionForm  = request.getAttribute("actionForm").toString();
 String textoBotao = request.getAttribute("txtBotao").toString();
+
+if(titulo.equals("Editar")){
+	listaShowBanda = (ArrayList<ShowBanda>) request.getAttribute("ShowsDaBanda");
+}
+
+for(Banda sl : listaBandas){	
+	
+	for(ShowBanda sb :listaShowBanda){
+		
+		if(sb.getId_banda()==sl.getIdBanda() && !idsIguaisShows.contains(sb.getId_banda())){
+			idsIguaisShows.add(sb.getId_banda());
+		}
+	}
+}
 
 %>
 <!DOCTYPE html>
@@ -51,6 +68,11 @@ String textoBotao = request.getAttribute("txtBotao").toString();
 				<% for(Banda banda : listaBandas){ %>
 					<input type="checkbox"
 					 id="<%=banda.getIdBanda() %>"
+					 <%
+						if(idsIguaisShows.contains(banda.getIdBanda())){
+							out.print("checked");
+						}
+					%>
 					 name="List_BandaIDs" value=<%= banda.getIdBanda() %>
 					>
 					<label for="<%= banda.getIdBanda() %>">

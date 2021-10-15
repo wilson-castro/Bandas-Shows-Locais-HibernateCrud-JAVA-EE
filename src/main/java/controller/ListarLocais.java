@@ -10,9 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import model.beans.Show;
-import model.beans.ShowsLocal;
-import model.dao.ShowsLocalDAO;
+import model.beans.Local;
+import model.dao.LocalDAO;
 
 
 @WebServlet("/ListarLocais")
@@ -26,15 +25,11 @@ public class ListarLocais extends HttpServlet {
 
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		ShowsLocalDAO showDao = new ShowsLocalDAO();
-		
-		/*
-    	ArrayList<ShowsLocal> listaShows = showDao.listarShowPorLocal();
-		
-		ArrayList<Show> shows = dao.listarShows()
-		*/
-
-		//request.setAttribute("shows", listaShows);
+		LocalDAO dao = new LocalDAO();
+	
+		ArrayList<Local> locais = dao.listarLocais();
+		 
+		request.setAttribute("locais", locais);
 		RequestDispatcher rd = request.getRequestDispatcher("TabelaLocais.jsp");
 		rd.forward(request, response);
 	}
