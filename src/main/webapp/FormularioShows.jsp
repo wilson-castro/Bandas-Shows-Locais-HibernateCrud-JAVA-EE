@@ -70,7 +70,7 @@ String textoBotao = request.getAttribute("txtBotao").toString();
 	</form>
 	<script src="scripts/validador.js"></script>
 	<script>
-	document.querySelector('#selectGeneros [value="<%=selectedOption %>"]').selected = true;
+	document.querySelector('#selectLocais [value="<%=selectedOption %>"]').selected = true;
 	</script>
 </body>
 </html>
