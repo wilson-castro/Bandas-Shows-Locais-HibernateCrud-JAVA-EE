@@ -53,7 +53,8 @@ public class LocalDAO {
 	
 	public ArrayList<Local> listarLocais() {
 		String sql = "select * from locais order by id_local";
-
+		ShowsLocalDAO dao = new ShowsLocalDAO();
+		
         try {
         	ArrayList<Local> locais = new ArrayList<Local>();
 
@@ -68,6 +69,51 @@ public class LocalDAO {
             	local.setNome(rs.getString("nome_local"));
             	local.setCapacidade(rs.getInt("capacidade"));
                 		
+            	int numLocais = 0;
+            	numLocais = dao.countShowPorLocais(local.getIdLocal());
+                
+                local.setNumShows(numLocais);
+                		
+                locais.add(local);
+
+            }
+            
+            rs.close();
+            stmt.close();
+            
+            return locais;
+            
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+	
+	public ArrayList<Local> listarLocaisComFiltro(String nomeLugar) {
+		String sql = "select * from locais where nome_local LIKE ? order by id_local";
+		ShowsLocalDAO dao = new ShowsLocalDAO();
+
+        try {
+        	ArrayList<Local> locais = new ArrayList<Local>();
+
+            PreparedStatement stmt = connection.prepareStatement(sql);
+            
+            stmt.setString(1, "%"+nomeLugar+"%");
+            
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+
+            	Local local = new Local();
+            	
+            	local.setIdLocal(rs.getInt("id_local"));
+            	local.setNome(rs.getString("nome_local"));
+            	local.setCapacidade(rs.getInt("capacidade"));
+                	
+                int numLocais = 0;
+            	numLocais = dao.countShowPorLocais(local.getIdLocal());
+                
+                local.setNumShows(numLocais);
+            	
                 locais.add(local);
             }
             
