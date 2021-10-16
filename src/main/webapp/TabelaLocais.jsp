@@ -49,7 +49,7 @@ ArrayList<Local> locais = (ArrayList<Local>) request.getAttribute("locais");
 				<td><%=lugar.getCapacidade()%></td>
 				<td>
 					<a href="FormControlLocais?operation=editar&idLocal=<%=lugar.getIdLocal()%>" class="Botao1">Editar</a>
-					<a href="javascript: confirmarShow(<%=lugar.getIdLocal()%>)" class="Botao2">Excluir</a>
+					<a href="javascript: confirmarLocal(<%=lugar.getIdLocal()%>)" class="Botao2">Excluir</a>
 				</td>
 			</tr>
 			<%

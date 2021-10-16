@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 import jdbc.ConnectionFactory;
 import model.beans.Local;
-import model.beans.ShowBanda;
+import model.beans.Show;
 import model.beans.ShowsLocal;
 
 public class LocalDAO {
@@ -21,10 +21,10 @@ public class LocalDAO {
 		this.connection = new ConnectionFactory().getConnection();
 	}
 		
-	public void adicionarLocal(Local local, int idShow) {
-		ShowBanda sb = new ShowBanda();
-		ShowsBandaDAO dao = new ShowsBandaDAO();
-
+	public void adicionarLocal(Local local,int showsIds[]) {
+		ShowsLocal sl = new ShowsLocal();
+		ShowsLocalDAO dao = new ShowsLocalDAO();
+		
 		String sql = "INSERT INTO locais(nome_local,capacidade) VALUES(?,?)";
 		
 		try {
@@ -37,7 +37,7 @@ public class LocalDAO {
 			ResultSet rs = stmt.getGeneratedKeys();
 			
 			if (rs.next()) {
-				sb.setId_banda(idShow);
+				sl.setLocal_Id(rs.getInt(1));
 			}
 
 			rs.close();
@@ -45,11 +45,11 @@ public class LocalDAO {
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
-		
-		if(idShow>0) {
-			ShowsLocalDAO sl = new ShowsLocalDAO();
-			sb.setId_banda(idShow);
-			dao.adicionar(sb);
+		if(showsIds != null) {
+			for(int i=0; i< showsIds.length; i++) {
+				sl.setShow_Id(showsIds[i]);
+				dao.adicionar(sl);
+			}
 		}
 	}
 	
@@ -131,7 +131,8 @@ public class LocalDAO {
 	
 	public Local selecionarLocal(Local local) {
         String sql = "select * from locais where id_local=?";
-        
+		ShowsLocalDAO dao = new ShowsLocalDAO();
+
         try {        	
 			PreparedStatement stmt = connection.prepareStatement(sql);
 			stmt.setInt(1, local.getIdLocal());
@@ -142,7 +143,12 @@ public class LocalDAO {
             	local.setIdLocal(rs.getInt("id_local"));
                 local.setNome(rs.getString("nome_local"));
                 local.setCapacidade(rs.getInt("capacidade"));
-
+                
+                int numLocais = 0;
+            	numLocais = dao.countShowPorLocais(local.getIdLocal());
+                
+                local.setNumShows(numLocais);
+                
 			}
 			
 			rs.close();
@@ -178,8 +184,25 @@ public class LocalDAO {
 	public void deletarLocal(Local local) {
         String sql = "DELETE FROM locais where id_local=?";
         
+        ShowsLocalDAO sl = new ShowsLocalDAO();
+        ShowDAO showDao = new ShowDAO();
+  
+        
         try {        	
 			PreparedStatement stmt = connection.prepareStatement(sql);
+			
+			int qtdShows = 0;
+			qtdShows = sl.countShowPorLocais(local.getIdLocal());
+				
+			if (qtdShows>0) {
+				sl.deletarShowPorLocal(local.getIdLocal());
+			}
+			
+			ArrayList<Show> showsDoLocal = showDao.listarShowsPorIdLocal(local.getIdLocal());
+			
+			for(Show show : showsDoLocal) {
+				showDao.deletarShow(show);
+			}
 			
 			stmt.setInt(1, local.getIdLocal());
 			

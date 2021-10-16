@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import model.beans.Show;
+import model.beans.Local;
 import model.dao.LocalDAO;
 
 
@@ -50,18 +50,19 @@ public class ControllerLocais extends HttpServlet {
 	
 	protected void novoLocal(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		/*Show show = new Show();
+		Local local = new Local();
 		
-		String data =  request.getParameter("data");
-		int idLocal = Integer.parseInt(request.getParameter("selectLocais"));
-				
-		show.setIdLocal(idLocal);
-		show.setData(data);
-		if (request.getParameterValues("List_BandaIDs") == null ) {
-			dao.adicionarShow(show, null);
+		String nome =  request.getParameter("nome");
+		int capacidade = Integer.parseInt(request.getParameter("capacidade"));
+		
+		local.setNome(nome);
+		local.setCapacidade(capacidade);
+
+		if (request.getParameterValues("List_ShowsIDs") == null ) {
+			dao.adicionarLocal(local, null);
 						
 		}else {
-			String[] checkboxIdsList = request.getParameterValues("List_BandaIDs");
+			String[] checkboxIdsList = request.getParameterValues("List_ShowsIDs");
 			int size = checkboxIdsList.length;
 						
 			int[] idsList = new int[size];
@@ -69,29 +70,27 @@ public class ControllerLocais extends HttpServlet {
 			for (int i = 0; i < size; i++) {
 			    idsList[i] = Integer.parseInt(checkboxIdsList[i]);
 			}
-			dao.adicionarShow(show, idsList);
+			dao.adicionarLocal(local, idsList);
 		}
 		
-		response.sendRedirect("/projeto/shows");*/
+		response.sendRedirect("/projeto/locais");
 	}
 	
 	protected void editarLocal(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		/*Show show = new Show();
+		Local local = new Local();
 		
+		String nome =  request.getParameter("nome");
+		int capacidade = Integer.parseInt(request.getParameter("capacidade"));
 		
-		String data = request.getParameter("data");
-		int idLocal = Integer.parseInt(request.getParameter("selectLocais"));
-		int idShow = Integer.parseInt(request.getParameter("idShow"));
-		
-		show.setIdShow(idShow);
-		show.setIdLocal(idLocal);
-		show.setData(data);
-		
-		if (request.getParameterValues("List_BandaIDs") == null) {
-			dao.alterarShow(show,null);
+		local.setNome(nome);
+		local.setCapacidade(capacidade);
+
+		if (request.getParameterValues("List_ShowsIDs") == null ) {
+			dao.adicionarLocal(local, null);
+						
 		}else {
-			String[] checkboxIdsList = request.getParameterValues("List_BandaIDs");
+			String[] checkboxIdsList = request.getParameterValues("List_ShowsIDs");
 			int size = checkboxIdsList.length;
 						
 			int[] idsList = new int[size];
@@ -99,22 +98,22 @@ public class ControllerLocais extends HttpServlet {
 			for (int i = 0; i < size; i++) {
 			    idsList[i] = Integer.parseInt(checkboxIdsList[i]);
 			}
-			dao.alterarShow(show,idsList);
-			
-		}*/
+			dao.adicionarLocal(local, idsList);
+		}
 		
-		response.sendRedirect("/projeto/shows");
+		response.sendRedirect("/projeto/locais");
 	}
 	
 	protected void removerLocal(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-	/*	int idShow = Integer.parseInt(request.getParameter("idShow"));
-		Show show = new Show();
-		show.setIdShow(idShow);
+		int idLocal = Integer.parseInt(request.getParameter("idLocal"));
 		
-		dao.deletarShow(show);
+		Local local = new Local();
+		local.setIdLocal(idLocal);
+		
+		dao.deletarLocal(local);
 			
-		response.sendRedirect("/projeto/shows");*/
+		response.sendRedirect("/projeto/locais");
 
 	}
  

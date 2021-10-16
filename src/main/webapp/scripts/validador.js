@@ -45,3 +45,29 @@ function validarShow() {
 		
 	}
 }
+
+function validarLocal(){
+	let nome = form.nome.value;
+	let capacidade = ""+form.capacidade.value;
+	
+	
+	const queryString = window.location.search;
+	const urlParams = new URLSearchParams(queryString);
+	const operation = urlParams.get('operation');
+	
+		if (nome === "") {
+		alert("Preencha  o campo 'nome'")
+		form.nome.focus();
+		return false;
+	}if (capacidade === "0") {
+		alert("Preencha o campo 'capacidade'")
+		form.capacidade.focus();
+		return false;
+	} else {
+		(document.forms["form"].submit());
+		
+	}
+}
+
+
+

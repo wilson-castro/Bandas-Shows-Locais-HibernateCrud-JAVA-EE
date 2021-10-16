@@ -9,17 +9,36 @@
 
 <%
 ArrayList<Show> listaShow= new ArrayList<Show>();
+ArrayList<ShowsLocal> listaShowsLocais = new ArrayList<ShowsLocal>();
+ArrayList<Integer> idsIguaisShows = new ArrayList<>();
 listaShow = (ArrayList<Show>) request.getAttribute("shows");
-
+																															
 String titulo = request.getAttribute("titulo").toString();
 String actionForm  = request.getAttribute("actionForm").toString();
 String textoBotao = request.getAttribute("txtBotao").toString();
 String textoInputNome = request.getAttribute("textoInputNome").toString();
 String textoInputCapacidade = request.getAttribute("textoInputCapacidade").toString();
 String placeHolderInput = request.getAttribute("defaultInput").toString();
+Local local = (Local) request.getAttribute("local");
 
 SimpleDateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd");
 String dataFormat = "";
+
+if(titulo.equals("Editar")){
+	listaShowsLocais = (ArrayList<ShowsLocal>) request.getAttribute("listaShowsLocais");
+}
+
+for(ShowsLocal sl : listaShowsLocais){	
+		
+	for(Show show: listaShow){
+		if(sl.getShow_Id()==show.getIdShow() && !idsIguaisShows.contains(sl.getShow_Id())){
+			idsIguaisShows.add(sl.getShow_Id());
+		}
+	
+	}
+	
+}
+
 %>
 <!DOCTYPE html>
 <html>
@@ -38,19 +57,23 @@ String dataFormat = "";
 				<% if(titulo.equals("Editar")){ %>
 					<label for="Caixa3"> ID </label>
 					<input type="text" name="idLocal" readOnly id="Caixa3"
-						value="<% out.print(1); %>">
+						value="<% out.print(local.getIdLocal()); %>">
 				<% }%>
 			</div>
-			
 				<input type="text" name="nome" placeholder="<%=placeHolderInput %>"
 					value="<%=textoInputNome %>" class="Caixa2">
-				<input type="number" name="capacidade" value="<%=textoInputCapacidade %>"
+				<input type="number" id="capacidade" name="capacidade" value="<%=textoInputCapacidade %>"
 				 min=1 class="Caixa2">
-			
+				
 			<h5>Shows</h5>
 			<div class="group-checkbox">
 				<% for(Show show : listaShow){ %>
 					<input type="checkbox"
+						<%
+						if(idsIguaisShows.contains(show.getIdShow())){
+							out.print("checked");
+						}
+					%>
 					 id="<%=show.getIdShow()%>"
 					 name="List_ShowsIDs" value=<%= show.getIdShow()%>
 					>
@@ -60,7 +83,7 @@ String dataFormat = "";
 						dataFormat = formatDate.format(show.getData().getTime());
 						out.print(dataFormat);
 						%> -
-						<strong>Nº Bandas</strong>: <%= show.getNumBandas() %> -
+						<strong>Nº Bandas</strong>: <%= show.getNumBandas() %>
 					 </label><br>
 				<%}%>
 			</div>
@@ -69,7 +92,7 @@ String dataFormat = "";
 		
 		
 		<input type="button" value="<%=textoBotao %>" class="Botao1"
-			onclick="validarShow()">
+			onclick="validarLocal()">
 	</form>
 	<script src="scripts/validador.js"></script>
 </body>

@@ -9,7 +9,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import model.beans.Local;
 import model.beans.Show;
+import model.dao.LocalDAO;
 import model.dao.ShowDAO;
 
 
@@ -50,13 +52,14 @@ public class ControllerShows extends HttpServlet {
 	protected void novoShow(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		Show show = new Show();
-		
+
 		String data =  request.getParameter("data");
 		int idLocal = Integer.parseInt(request.getParameter("selectLocais"));
-				
+		
+		
 		show.setIdLocal(idLocal);
 		show.setData(data);
-
+		
 		if (request.getParameterValues("List_BandaIDs") == null ) {
 			dao.adicionarShow(show, null);
 						
@@ -76,7 +79,10 @@ public class ControllerShows extends HttpServlet {
 	}
 	protected void editarShow(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-	Show show = new Show();
+		int idShow = Integer.parseInt(request.getParameter("idShow"));
+		Show show = new Show();
+		
+		show.setIdShow(idShow);
 		
 		String data =  request.getParameter("data");
 		int idLocal = Integer.parseInt(request.getParameter("selectLocais"));

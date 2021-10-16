@@ -121,6 +121,50 @@ public class ShowsLocalDAO {
         }
     }
 	
+	public ArrayList<ShowsLocal> listarShowPorLocalPorIdLocal(int idLocal) {
+		String sql = "select"
+				+ " id_show as ID_Show,id_local as ID_Local, "
+				+ "data as DATA_Show, nome_local as ONDE,"
+				+ "  capacidade as CAPACIDADE  "
+				+ "from shows "
+				+ " inner join locais on shows.local_id  = locais.id_local where local_id =?";
+		ShowsBandaDAO sb = new ShowsBandaDAO();
+		
+        try {
+        	ArrayList<ShowsLocal> shows = new ArrayList<ShowsLocal>();
+        	
+            PreparedStatement stmt = connection.prepareStatement(sql);       
+            stmt.setInt(1, idLocal);
+            
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+
+            	ShowsLocal sl = new ShowsLocal();
+            	
+            	sl.setShow_Id(rs.getInt("ID_Show"));
+            	sl.setLocal_Id(rs.getInt("ID_Local"));
+            	sl.setData_show(rs.getString("DATA_Show"));
+            	sl.setLugar_nome(rs.getString("ONDE"));
+            	sl.setCapacidade(rs.getInt("CAPACIDADE"));
+            	
+            	int numBandas = 0;
+            	numBandas = sb.countBandaPorShow(sl.getShow_Id());
+                sl.setNumBandas(numBandas);
+                
+
+            	shows.add(sl);
+            }
+            
+            rs.close();
+            stmt.close();
+            
+            return shows;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+	
 	public ArrayList<ShowsLocal> listarShowPorLocaComFiltrol(String nomeLugar) {
 		String sql = "select"
 				+ " id_show as ID_Show,id_local as ID_Local, "
@@ -184,5 +228,25 @@ public class ShowsLocalDAO {
         }
         
 	}
+	
+	public void deletarShowPorLocal(int idLocal) {
+        String sql = "delete from showsPorLocal where local_id=?";
+                
+        try {        	
+			PreparedStatement stmt = connection.prepareStatement(sql);
+		
+			stmt.setInt(1, idLocal);
+			
+			stmt.execute();
+			stmt.close();
+		
+					
+        }catch(SQLException e) {
+            throw new RuntimeException(e);
+        }
+        
+	}
+	
+	
 	
 }

@@ -51,7 +51,7 @@ for(Banda sl : listaBandas){
 			<div>
 				<% if(titulo.equals("Editar")){ %>
 					<label for="Caixa3"> ID </label>
-					<input type="text" name="idBanda" readOnly id="Caixa3"
+					<input type="text" name="idShow" readOnly id="Caixa3"
 						value="<% out.print(show.getIdShow()); %>">
 				<% }%>
 			</div>

@@ -1,7 +1,6 @@
 package controller;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
@@ -11,14 +10,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import model.beans.Banda;
 import model.beans.Local;
 import model.beans.Show;
-import model.beans.ShowBanda;
-import model.dao.BandaDAO;
+import model.beans.ShowsLocal;
 import model.dao.LocalDAO;
 import model.dao.ShowDAO;
-import model.dao.ShowsBandaDAO;
+import model.dao.ShowsLocalDAO;
 
 @WebServlet("/FormControlLocais")
 public class FormControlLocais extends HttpServlet {
@@ -49,7 +46,28 @@ public class FormControlLocais extends HttpServlet {
 			RequestDispatcher rd = request.getRequestDispatcher("FormularioLocais.jsp");
 			rd.forward(request, response);
 		}else if(operation.equals("editar")){
-
+			Local local = new Local();
+			LocalDAO localDao = new LocalDAO();
+			ShowDAO ShowDao = new ShowDAO();
+			ShowsLocalDAO showsLocalDao = new ShowsLocalDAO();
+			
+			int idLocal = Integer.parseInt(request.getParameter("idLocal")); 	
+			
+			ArrayList<Show> listaShow = ShowDao.listarShows();
+			ArrayList<ShowsLocal> listaShowLocal = showsLocalDao.listarShowPorLocalPorIdLocal(idLocal);
+			
+			local.setIdLocal(idLocal);
+			localDao.selecionarLocal(local);
+			
+			request.setAttribute("titulo", "Editar");
+			request.setAttribute("txtBotao", "Alterar");
+			request.setAttribute("actionForm", "locais/update");
+			request.setAttribute("textoInputNome", local.getNome());
+			request.setAttribute("textoInputCapacidade", local.getCapacidade());
+			request.setAttribute("defaultInput", "");
+			request.setAttribute("shows", listaShow);
+			request.setAttribute("listaShowsLocais", listaShowLocal);
+			request.setAttribute("local", local);
 			
 			RequestDispatcher rd = request.getRequestDispatcher("FormularioLocais.jsp");
 			rd.forward(request, response);

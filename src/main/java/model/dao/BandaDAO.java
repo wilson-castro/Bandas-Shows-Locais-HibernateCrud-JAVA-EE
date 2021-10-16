@@ -223,14 +223,10 @@ public class BandaDAO {
 			
 			int qtdBandas = 0;
 			qtdBandas = sb.countShowPorBanda(banda.getIdBanda());
-			
-			System.out.println(qtdBandas);
-
 				
 			if (qtdBandas>0) {
 				sb.deletarShowPorBanda(banda.getIdBanda());
 			}
-			
 			
 			stmt.setInt(1, banda.getIdBanda());
 			
