@@ -5,8 +5,7 @@ public class Local {
 	private int idLocal;
 	private String nome;
 	private int capacidade;
-	private Show[] shows;
-	
+	private int numShows;
 	
 	public void setIdLocal(int idLocal) {
 		this.idLocal = idLocal;
@@ -26,12 +25,14 @@ public class Local {
 	public void setCapacidade(int capacidade) {
 		this.capacidade = capacidade;
 	}
-	public Show[] getShows() {
-		return shows;
+	public int getNumShows() {
+		return numShows;
 	}
-	public void setShows(Show[] shows) {
-		this.shows = shows;
+	public void setNumShows(int numShows) {
+		this.numShows = numShows;
 	}
+	
+	
 	
 	
 }

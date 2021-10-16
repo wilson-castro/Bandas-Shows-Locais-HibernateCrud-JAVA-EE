@@ -151,13 +151,11 @@ public class BandaDAO {
     				stmt.setString((i+2), generosFiltro[i].toString());
     			}
     		}
-            
-            System.out.println(stmt.toString());
-            
+                        
             ResultSet rs = stmt.executeQuery();
 
             while (rs.next()) {
-                // criando o objeto Contato
+
                 String generoString = rs.getString("genero");
             	Banda banda = new Banda();
             	Genero genero = Genero.valueOf(generoString);
@@ -224,11 +222,15 @@ public class BandaDAO {
 			PreparedStatement stmt = connection.prepareStatement(sql);
 			
 			int qtdBandas = 0;
-			qtdBandas = sb.countBandaPorShow(banda.getIdBanda());
+			qtdBandas = sb.countShowPorBanda(banda.getIdBanda());
 			
+			System.out.println(qtdBandas);
+
+				
 			if (qtdBandas>0) {
 				sb.deletarShowPorBanda(banda.getIdBanda());
 			}
+			
 			
 			stmt.setInt(1, banda.getIdBanda());
 			
@@ -238,9 +240,7 @@ public class BandaDAO {
         }catch(SQLException e) {
             throw new RuntimeException(e);
         }
-        
-        
-        
+                
 	}
 	
 	

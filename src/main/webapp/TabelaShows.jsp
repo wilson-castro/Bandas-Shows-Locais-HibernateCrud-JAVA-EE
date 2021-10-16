@@ -50,7 +50,7 @@ ArrayList<ShowsLocal> shows = (ArrayList<ShowsLocal>) request.getAttribute("show
 				<td><%=show.getNumBandas() %></td>
 				<td><%=show.getCapacidade()%></td>
 				<td>
-					<a href="select?idBanda=<%= show.getShow_Id() %>" class="Botao1">Editar</a>
+					<a href="FormControlShows?operation=editar&idShow=<%=show.getShow_Id()%>" class="Botao1">Editar</a>
 					<a href="javascript: confirmarShow(<%= show.getShow_Id() %>)" class="Botao2">Excluir</a>
 				</td>
 			</tr>

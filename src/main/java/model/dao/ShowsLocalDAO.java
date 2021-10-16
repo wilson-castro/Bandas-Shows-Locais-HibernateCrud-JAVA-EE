@@ -33,9 +33,51 @@ public class ShowsLocalDAO {
 		}
 	}
 	
-	public void delete(int idBanda) {
-		String sql ="DELETE";
-	}
+	public int countShowPorLocais(int idLocal) {
+		String sql = "select count(*) from projeto.showsPorLocal where local_id=?";
+		int count = 0;
+        try {        	
+            PreparedStatement stmt = connection.prepareStatement(sql);
+            stmt.setInt(1, idLocal);
+            ResultSet rs = stmt.executeQuery();
+            
+            while (rs.next()) {
+            	
+            count = rs.getInt(1);
+            	
+            }
+            rs.close();
+            stmt.close();
+            
+            return count;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+	
+	public int countLocaisPorShow(int idShow) {
+		String sql = "select count(*) from projeto.showsPorLocal where show_id=?";
+		int count = 0;
+        try {        	
+            PreparedStatement stmt = connection.prepareStatement(sql);
+            stmt.setInt(1, idShow);
+            ResultSet rs = stmt.executeQuery();
+            
+            while (rs.next()) {
+            	
+            count = rs.getInt(1);
+            	
+            }
+            rs.close();
+            stmt.close();
+            
+            return count;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 	
 	public ArrayList<ShowsLocal> listarShowPorLocal() {
 		String sql = "select"
@@ -123,4 +165,24 @@ public class ShowsLocalDAO {
             throw new RuntimeException(e);
         }
     }
+	
+
+	public void deletarLocalPorShow(int idShow) {
+        String sql = "delete from showsPorLocal where show_id=?";
+                
+        try {        	
+			PreparedStatement stmt = connection.prepareStatement(sql);
+		
+			stmt.setInt(1, idShow);
+			
+			stmt.execute();
+			stmt.close();
+		
+					
+        }catch(SQLException e) {
+            throw new RuntimeException(e);
+        }
+        
+	}
+	
 }

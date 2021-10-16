@@ -1,6 +1,7 @@
 package controller;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
@@ -12,8 +13,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import model.beans.Banda;
 import model.beans.Local;
+import model.beans.Show;
+import model.beans.ShowBanda;
 import model.dao.BandaDAO;
 import model.dao.LocalDAO;
+import model.dao.ShowDAO;
+import model.dao.ShowsBandaDAO;
 
 
 @WebServlet("/FormControlShows")
@@ -25,7 +30,7 @@ public class FormControlShows extends HttpServlet {
         super();
     }
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String operation = request.getParameter("operation");
 		
 		if(operation.equals("novo")) {
@@ -49,6 +54,49 @@ public class FormControlShows extends HttpServlet {
 
 			RequestDispatcher rd = request.getRequestDispatcher("FormularioShows.jsp");
 			rd.forward(request, response);
+		}else if(operation.equals("editar")){
+			Show show = new Show();
+			ShowBanda sb = new ShowBanda();
+
+			LocalDAO localDao = new LocalDAO();
+			BandaDAO bandaDao = new BandaDAO();
+			ShowDAO showDao = new ShowDAO();
+			ShowsBandaDAO showbandaDao = new ShowsBandaDAO();
+			
+			int idShow = Integer.parseInt(request.getParameter("idShow"));
+			
+			show.setIdShow(idShow);
+			showDao.selecionarShow(show);
+			
+			sb.setId_show(idShow);
+			
+			ArrayList<Local> listaLocais = new ArrayList<Local>();
+			listaLocais = localDao.listarLocais();
+			
+			ArrayList<Banda> listaBandas = new ArrayList<Banda>();
+			listaBandas = bandaDao.listarBandas();
+			
+        	ArrayList<ShowBanda> listaBandaShow = showbandaDao.selecionarShowsPorBanda(sb);
+					
+			SimpleDateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd");
+			String dataFormat = formatDate.format(show.getData().getTime());
+			
+			request.setAttribute("titulo", "Editar");
+			request.setAttribute("selected", show.getIdLocal());
+			request.setAttribute("dataDefault", dataFormat);
+			request.setAttribute("txtBotao", "Alterar");
+			request.setAttribute("locais", listaLocais);
+			request.setAttribute("bandas", listaBandas);
+			request.setAttribute("show", show);
+			request.setAttribute("ShowsDaBanda", listaBandaShow);
+
+			request.setAttribute("actionForm", "shows/update");
+			
+			
+			RequestDispatcher rd = request.getRequestDispatcher("FormularioShows.jsp");
+			rd.forward(request, response);
+			
+			
 		} else {
 			response.sendRedirect("ListarBandas");
 		}

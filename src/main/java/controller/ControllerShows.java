@@ -13,7 +13,8 @@ import model.beans.Show;
 import model.dao.ShowDAO;
 
 
-@WebServlet(urlPatterns = { "/ControllerShows", "/shows","/shows/delete","/shows/insert" })
+@WebServlet(urlPatterns = { "/ControllerShows", "/shows","/shows/delete","/shows/insert",
+		"/shows/select","/shows/update" })
 public class ControllerShows extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     ShowDAO dao = new ShowDAO();
@@ -31,6 +32,8 @@ public class ControllerShows extends HttpServlet {
 			novoShow(request, response);
 		}else if(action.equals("/shows/delete")) {
 			removerShow(request, response);
+		}else if(action.equals("/shows/update")) {
+			editarShow(request, response);
 		}else {
 			response.sendRedirect("index.jsp");
 		}
@@ -67,6 +70,33 @@ public class ControllerShows extends HttpServlet {
 			    idsList[i] = Integer.parseInt(checkboxIdsList[i]);
 			}
 			dao.adicionarShow(show, idsList);
+		}
+		
+		response.sendRedirect("/projeto/shows");
+	}
+	protected void editarShow(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+	Show show = new Show();
+		
+		String data =  request.getParameter("data");
+		int idLocal = Integer.parseInt(request.getParameter("selectLocais"));
+				
+		show.setIdLocal(idLocal);
+		show.setData(data);
+
+		if (request.getParameterValues("List_BandaIDs") == null ) {
+			dao.alterarShow(show, null);
+						
+		}else {
+			String[] checkboxIdsList = request.getParameterValues("List_BandaIDs");
+			int size = checkboxIdsList.length;
+						
+			int[] idsList = new int[size];
+			
+			for (int i = 0; i < size; i++) {
+			    idsList[i] = Integer.parseInt(checkboxIdsList[i]);
+			}
+			dao.alterarShow(show, idsList);
 		}
 		
 		response.sendRedirect("/projeto/shows");

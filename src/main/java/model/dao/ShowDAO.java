@@ -5,6 +5,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -26,7 +27,7 @@ public class ShowDAO {
 		String sql = "INSERT INTO shows(local_id,data) VALUES(?,?)";
 		
 		try {
-			PreparedStatement stmt = connection.prepareStatement(sql);
+			PreparedStatement stmt = connection.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
 
 			stmt.setInt(1, show.getIdLocal());
 			stmt.setDate(2, new Date(
@@ -39,6 +40,7 @@ public class ShowDAO {
 				sb.setId_show(rs.getInt(1));
 			}
 			
+			rs.close();
 			stmt.close();
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
@@ -77,7 +79,7 @@ public class ShowDAO {
                   numBandas = sb.countBandaPorShow(show.getIdShow());
                   
                   show.setNumBandas(numBandas);                  
-                // adicionando o objeto à lista
+
                 shows.add(show);
             }
             
@@ -121,9 +123,11 @@ public class ShowDAO {
         
 	}
 	
-	public void alterarShow(Show show) {
+	public void alterarShow(Show show, int[] bandasIds) {
         String sql = "UPDATE shows SET data=?, local_id=? WHERE id_show=?";
-        
+		ShowBanda sb = new ShowBanda();
+		ShowsBandaDAO dao = new ShowsBandaDAO();
+		
         try {        	
 			PreparedStatement stmt = connection.prepareStatement(sql);
 			
@@ -138,6 +142,16 @@ public class ShowDAO {
         }catch(SQLException e) {
             throw new RuntimeException(e);
         }
+        
+        dao.deletarBandaPorShow(show.getIdShow());
+        
+        if(bandasIds != null) {
+			for(int i=0; i< bandasIds.length; i++) {
+				sb.setId_banda(bandasIds[i]);
+				sb.setId_show(show.getIdShow());
+				dao.adicionar(sb);
+			}
+		}
         
 	}
 	
