@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import model.beans.Local;
 import model.dao.LocalDAO;
+import model.dao.ShowDAO;
 
 
 @WebServlet(urlPatterns = { "/ControllerLocais", "/locais","/locais/delete","/locais/insert",
@@ -82,12 +83,14 @@ public class ControllerLocais extends HttpServlet {
 		
 		String nome =  request.getParameter("nome");
 		int capacidade = Integer.parseInt(request.getParameter("capacidade"));
-		
+		int idLocal = Integer.parseInt(request.getParameter("idLocal"));
+
+		local.setIdLocal(idLocal);
 		local.setNome(nome);
 		local.setCapacidade(capacidade);
-
+		
 		if (request.getParameterValues("List_ShowsIDs") == null ) {
-			dao.adicionarLocal(local, null);
+			dao.alterarLocal(local, null);
 						
 		}else {
 			String[] checkboxIdsList = request.getParameterValues("List_ShowsIDs");
@@ -98,7 +101,7 @@ public class ControllerLocais extends HttpServlet {
 			for (int i = 0; i < size; i++) {
 			    idsList[i] = Integer.parseInt(checkboxIdsList[i]);
 			}
-			dao.adicionarLocal(local, idsList);
+			dao.alterarLocal(local, idsList);
 		}
 		
 		response.sendRedirect("/projeto/locais");

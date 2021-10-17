@@ -71,10 +71,10 @@ public class LocalDAO {
             	local.setNome(rs.getString("nome_local"));
             	local.setCapacidade(rs.getInt("capacidade"));
                 		
-            	int numLocais = 0;
-            	numLocais = dao.countShowPorLocais(local.getIdLocal());
-                
-                local.setNumShows(numLocais);
+            	int numShows = 0;
+            	numShows = dao.countShowPorLocais(local.getIdLocal());
+    
+                local.setNumShows(numShows);
                 		
                 locais.add(local);
 
@@ -111,12 +111,13 @@ public class LocalDAO {
             	local.setNome(rs.getString("nome_local"));
             	local.setCapacidade(rs.getInt("capacidade"));
                 	
-                int numLocais = 0;
-            	numLocais = dao.countShowPorLocais(local.getIdLocal());
-                
-                local.setNumShows(numLocais);
-            	
+            	int numShows = 0;
+            	numShows = dao.countShowPorLocais(local.getIdLocal());
+    
+                local.setNumShows(numShows);
+                		
                 locais.add(local);
+
             }
             
             rs.close();
@@ -144,10 +145,11 @@ public class LocalDAO {
                 local.setNome(rs.getString("nome_local"));
                 local.setCapacidade(rs.getInt("capacidade"));
                 
-                int numLocais = 0;
-            	numLocais = dao.countShowPorLocais(local.getIdLocal());
-                
-                local.setNumShows(numLocais);
+				int numShows = 0;
+        	numShows = dao.countShowPorLocais(local.getIdLocal());
+
+            local.setNumShows(numShows);
+            		
                 
 			}
 			
@@ -162,7 +164,9 @@ public class LocalDAO {
         
 	}
 	
-	public void alterarLocal(Local local) {
+	public void alterarLocal(Local local,int showsIds[]) {
+		ShowsLocal sl = new ShowsLocal();
+		ShowsLocalDAO dao = new ShowsLocalDAO();
         String sql = "UPDATE locais SET nome_local=?, capacidade=? WHERE id_local=?";
         
         try {        	
@@ -171,13 +175,23 @@ public class LocalDAO {
 			stmt.setString(1, local.getNome());
 			stmt.setInt(2, local.getCapacidade());
 			stmt.setInt(3, local.getIdLocal());
-
+			
+	        dao.deletarShowPorLocal(local.getIdLocal());
+			
 			stmt.executeUpdate();
 			stmt.close();
 			
         }catch(SQLException e) {
             throw new RuntimeException(e);
         }
+        
+        if(showsIds != null) {
+			for(int i=0; i< showsIds.length; i++) {
+				sl.setLocal_Id(local.getIdLocal());
+				sl.setShow_Id(showsIds[i]);
+				dao.adicionar(sl);
+			}
+		}
         
 	}
 	
