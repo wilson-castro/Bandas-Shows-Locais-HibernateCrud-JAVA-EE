@@ -221,6 +221,7 @@ public class ShowsLocalDAO {
         
 	}
 	
+<<<<<<< HEAD
 	public void deletarShowPorLocal(int idLocal) {
         String sql = "delete from showsPorLocal where local_id=?";
                 
@@ -242,3 +243,6 @@ public class ShowsLocalDAO {
 	
 	
 }
+=======
+}
+>>>>>>> 0690f7234116e83e92b1cb685719bbc121fd397a

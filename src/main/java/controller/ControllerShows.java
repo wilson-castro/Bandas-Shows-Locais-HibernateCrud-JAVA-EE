@@ -9,10 +9,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+<<<<<<< HEAD
 import model.beans.Local;
+=======
+import model.beans.Banda;
+>>>>>>> 0690f7234116e83e92b1cb685719bbc121fd397a
 import model.beans.Show;
 import model.dao.LocalDAO;
 import model.dao.ShowDAO;
+import model.enums.Genero;
 
 
 @WebServlet(urlPatterns = { "/ControllerShows", "/shows","/shows/delete","/shows/insert",
@@ -83,6 +88,33 @@ public class ControllerShows extends HttpServlet {
 		Show show = new Show();
 		
 		show.setIdShow(idShow);
+		
+		String data =  request.getParameter("data");
+		int idLocal = Integer.parseInt(request.getParameter("selectLocais"));
+				
+		show.setIdLocal(idLocal);
+		show.setData(data);
+
+		if (request.getParameterValues("List_BandaIDs") == null ) {
+			dao.alterarShow(show, null);
+						
+		}else {
+			String[] checkboxIdsList = request.getParameterValues("List_BandaIDs");
+			int size = checkboxIdsList.length;
+						
+			int[] idsList = new int[size];
+			
+			for (int i = 0; i < size; i++) {
+			    idsList[i] = Integer.parseInt(checkboxIdsList[i]);
+			}
+			dao.alterarShow(show, idsList);
+		}
+		
+		response.sendRedirect("/projeto/shows");
+	}
+	protected void editarShow(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+	Show show = new Show();
 		
 		String data =  request.getParameter("data");
 		int idLocal = Integer.parseInt(request.getParameter("selectLocais"));
