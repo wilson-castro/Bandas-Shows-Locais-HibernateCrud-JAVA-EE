@@ -63,8 +63,8 @@ public class FormControlBandas extends HttpServlet {
 			sb.setId_banda(idBanda);
 			
         	ArrayList<ShowsLocal> listaShows = showDao.listarShowPorLocal();
-        	ArrayList<ShowBanda> listaShowBanda = showbandaDao.selecionarBandasPorShow(sb);
-        	
+        	ArrayList<ShowBanda> listaShowBanda = showbandaDao.selecionarShowsPorBanda(sb);
+			
 			request.setAttribute("titulo", "Editar");
 			request.setAttribute("defaultInput", "");
 			request.setAttribute("selected", banda.getGenero().toString());

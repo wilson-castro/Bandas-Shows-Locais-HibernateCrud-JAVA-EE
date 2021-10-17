@@ -12,12 +12,15 @@ import javax.servlet.http.HttpServletResponse;
 <<<<<<< HEAD
 import model.beans.Local;
 import model.dao.LocalDAO;
+<<<<<<< HEAD
 import model.dao.ShowDAO;
 =======
 import model.beans.Show;
 import model.dao.LocalDAO;
 
 >>>>>>> 0690f7234116e83e92b1cb685719bbc121fd397a
+=======
+>>>>>>> parent of be24d50 (Finalização do projeto)
 
 
 @WebServlet(urlPatterns = { "/ControllerLocais", "/locais","/locais/delete","/locais/insert",
@@ -113,14 +116,12 @@ public class ControllerLocais extends HttpServlet {
 		
 		String nome =  request.getParameter("nome");
 		int capacidade = Integer.parseInt(request.getParameter("capacidade"));
-		int idLocal = Integer.parseInt(request.getParameter("idLocal"));
-
-		local.setIdLocal(idLocal);
+		
 		local.setNome(nome);
 		local.setCapacidade(capacidade);
-		
+
 		if (request.getParameterValues("List_ShowsIDs") == null ) {
-			dao.alterarLocal(local, null);
+			dao.adicionarLocal(local, null);
 						
 		}else {
 			String[] checkboxIdsList = request.getParameterValues("List_ShowsIDs");
@@ -149,7 +150,11 @@ public class ControllerLocais extends HttpServlet {
 			    idsList[i] = Integer.parseInt(checkboxIdsList[i]);
 			}
 <<<<<<< HEAD
+<<<<<<< HEAD
 			dao.alterarLocal(local, idsList);
+=======
+			dao.adicionarLocal(local, idsList);
+>>>>>>> parent of be24d50 (Finalização do projeto)
 		}
 		
 		response.sendRedirect("/projeto/locais");

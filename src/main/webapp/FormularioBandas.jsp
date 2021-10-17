@@ -23,10 +23,9 @@ if(titulo.equals("Editar")){
 }
 
 for(ShowsLocal sl : listashows){	
-		
+	
 	for(ShowBanda sb :listaShowBanda){
-		System.out.println(sb.getId_show());
-
+		
 		if(sb.getId_show()==sl.getShow_Id() && !idsIguaisShows.contains(sb.getId_show())){
 			idsIguaisShows.add(sb.getId_show());
 		}
