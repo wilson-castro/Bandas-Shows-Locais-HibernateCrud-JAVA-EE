@@ -57,7 +57,6 @@ public class LocalDAO {
 		String sql = "select * from locais order by id_local";
 		ShowsLocalDAO dao = new ShowsLocalDAO();
 		
-<<<<<<< HEAD
         try {
         	ArrayList<Local> locais = new ArrayList<Local>();
 
@@ -72,59 +71,11 @@ public class LocalDAO {
             	local.setNome(rs.getString("nome_local"));
             	local.setCapacidade(rs.getInt("capacidade"));
                 		
-            	int numLocais = 0;
-            	numLocais = dao.countShowPorLocais(local.getIdLocal());
-                
-                local.setNumShows(numLocais);
-                		
-                locais.add(local);
-
-            }
-            
-            rs.close();
-            stmt.close();
-            
-            return locais;
-            
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-	
-	public ArrayList<Local> listarLocaisComFiltro(String nomeLugar) {
-		String sql = "select * from locais where nome_local LIKE ? order by id_local";
-		ShowsLocalDAO dao = new ShowsLocalDAO();
-
-=======
->>>>>>> 0690f7234116e83e92b1cb685719bbc121fd397a
-        try {
-        	ArrayList<Local> locais = new ArrayList<Local>();
-
-            PreparedStatement stmt = connection.prepareStatement(sql);
-            
-            stmt.setString(1, "%"+nomeLugar+"%");
-            
-            ResultSet rs = stmt.executeQuery();
-
-            while (rs.next()) {
-
-            	Local local = new Local();
-            	
-            	local.setIdLocal(rs.getInt("id_local"));
-            	local.setNome(rs.getString("nome_local"));
-            	local.setCapacidade(rs.getInt("capacidade"));
-                	
-<<<<<<< HEAD
             	int numShows = 0;
             	numShows = dao.countShowPorLocais(local.getIdLocal());
     
                 local.setNumShows(numShows);
                 		
-            	int numLocais = 0;
-            	numLocais = dao.countShowPorLocais(local.getIdLocal());
-                
-                local.setNumShows(numLocais);
-                		
                 locais.add(local);
 
             }
@@ -160,14 +111,13 @@ public class LocalDAO {
             	local.setNome(rs.getString("nome_local"));
             	local.setCapacidade(rs.getInt("capacidade"));
                 	
-=======
->>>>>>> parent of be24d50 (Finalização do projeto)
-                int numLocais = 0;
-            	numLocais = dao.countShowPorLocais(local.getIdLocal());
-                
-                local.setNumShows(numLocais);
-            	
+            	int numShows = 0;
+            	numShows = dao.countShowPorLocais(local.getIdLocal());
+    
+                local.setNumShows(numShows);
+                		
                 locais.add(local);
+
             }
             
             rs.close();
@@ -195,10 +145,11 @@ public class LocalDAO {
                 local.setNome(rs.getString("nome_local"));
                 local.setCapacidade(rs.getInt("capacidade"));
                 
-                int numLocais = 0;
-            	numLocais = dao.countShowPorLocais(local.getIdLocal());
-                
-                local.setNumShows(numLocais);
+				int numShows = 0;
+        	numShows = dao.countShowPorLocais(local.getIdLocal());
+
+            local.setNumShows(numShows);
+            		
                 
 			}
 			
@@ -213,7 +164,9 @@ public class LocalDAO {
         
 	}
 	
-	public void alterarLocal(Local local) {
+	public void alterarLocal(Local local,int showsIds[]) {
+		ShowsLocal sl = new ShowsLocal();
+		ShowsLocalDAO dao = new ShowsLocalDAO();
         String sql = "UPDATE locais SET nome_local=?, capacidade=? WHERE id_local=?";
         
         try {        	
@@ -222,13 +175,23 @@ public class LocalDAO {
 			stmt.setString(1, local.getNome());
 			stmt.setInt(2, local.getCapacidade());
 			stmt.setInt(3, local.getIdLocal());
-
+			
+	        dao.deletarShowPorLocal(local.getIdLocal());
+			
 			stmt.executeUpdate();
 			stmt.close();
 			
         }catch(SQLException e) {
             throw new RuntimeException(e);
         }
+        
+        if(showsIds != null) {
+			for(int i=0; i< showsIds.length; i++) {
+				sl.setLocal_Id(local.getIdLocal());
+				sl.setShow_Id(showsIds[i]);
+				dao.adicionar(sl);
+			}
+		}
         
 	}
 	

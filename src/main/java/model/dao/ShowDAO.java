@@ -23,16 +23,9 @@ public class ShowDAO {
 	
 	public void adicionarShow(Show show, int bandasIds[]) {
 		ShowBanda sb = new ShowBanda();
-<<<<<<< HEAD
 		ShowsLocal showLocal = new ShowsLocal();
 		ShowsBandaDAO dao = new ShowsBandaDAO();
 		ShowsLocalDAO showLocalDao = new ShowsLocalDAO();
-=======
-		ShowsLocal sl = new ShowsLocal();
-		
-		ShowsBandaDAO dao = new ShowsBandaDAO();
-		ShowsLocalDAO slDao = new ShowsLocalDAO();
->>>>>>> 0690f7234116e83e92b1cb685719bbc121fd397a
 		
 		String sql = "INSERT INTO shows(local_id,data) VALUES(?,?)";
 		
@@ -48,7 +41,6 @@ public class ShowDAO {
 
 			if (rs.next()) {
 				sb.setId_show(rs.getInt(1));
-<<<<<<< HEAD
 				show.setIdShow(rs.getInt(1));
 			}
 			
@@ -56,11 +48,6 @@ public class ShowDAO {
 			showLocal.setShow_Id(show.getIdShow());
 			showLocalDao.adicionar(showLocal);
 			
-=======
-				sl.setShow_Id(rs.getInt(1));
-			}
-			
->>>>>>> 0690f7234116e83e92b1cb685719bbc121fd397a
 			rs.close();
 			stmt.close();
 		} catch (SQLException e) {
@@ -74,41 +61,6 @@ public class ShowDAO {
 			}
 		}
 		
-		sl.setLocal_Id(show.getIdLocal());
-		slDao.adicionar(sl);
-		
-	}
-	
-	public void alterarShow(Show show, int[] bandasIds) {
-        String sql = "UPDATE shows SET data=?, local_id=? WHERE id_show=?";
-		ShowBanda sb = new ShowBanda();
-		ShowsBandaDAO dao = new ShowsBandaDAO();
-		
-        try {        	
-			PreparedStatement stmt = connection.prepareStatement(sql);
-			
-			stmt.setDate(1, new Date(
-                    show.getData().getTimeInMillis()));
-			stmt.setInt(2, show.getIdLocal());
-			stmt.setInt(3, show.getIdShow());
-
-			stmt.executeUpdate();
-			stmt.close();
-			
-        }catch(SQLException e) {
-            throw new RuntimeException(e);
-        }
-        
-        dao.deletarBandaPorShow(show.getIdShow());
-        
-        if(bandasIds != null) {
-			for(int i=0; i< bandasIds.length; i++) {
-				sb.setId_banda(bandasIds[i]);
-				sb.setId_show(show.getIdShow());
-				dao.adicionar(sb);
-			}
-		}
-        
 	}
 	
 	public ArrayList<Show> listarShows() {
@@ -136,7 +88,6 @@ public class ShowDAO {
                   
                   show.setNumBandas(numBandas);                  
 
-<<<<<<< HEAD
                 shows.add(show);
             }
             
@@ -177,8 +128,6 @@ public class ShowDAO {
                   
                   show.setNumBandas(numBandas);                  
 
-=======
->>>>>>> 0690f7234116e83e92b1cb685719bbc121fd397a
                 shows.add(show);
             }
             
@@ -195,11 +144,7 @@ public class ShowDAO {
 	public Show selecionarShow(Show show) {
         String sql = "select * from shows where id_show=?";
 		ShowsBandaDAO sb = new ShowsBandaDAO();
-<<<<<<< HEAD
 
-=======
-        
->>>>>>> 0690f7234116e83e92b1cb685719bbc121fd397a
         try {        	
 			PreparedStatement stmt = connection.prepareStatement(sql);
 			stmt.setInt(1, show.getIdShow());
@@ -213,11 +158,6 @@ public class ShowDAO {
           	  Calendar data = Calendar.getInstance();
                 data.setTime(rs.getDate("data"));
                 show.setData(data);
-                
-                int numBandas = 0;
-                numBandas = sb.countBandaPorShow(show.getIdShow());
-                
-                show.setNumBandas(numBandas);
 
                 int numBandas = 0;
                 numBandas = sb.countBandaPorShow(show.getIdShow());
@@ -236,7 +176,6 @@ public class ShowDAO {
         
 	}
 	
-<<<<<<< HEAD
 	
 	
 	public void alterarShow(Show show, int[] bandasIds) {
@@ -278,8 +217,6 @@ public class ShowDAO {
 		}
         
 	}
-=======
->>>>>>> 0690f7234116e83e92b1cb685719bbc121fd397a
 	
 	public void deletarShow(Show show) {
         String sql = "DELETE FROM shows where id_show=?";
@@ -299,13 +236,6 @@ public class ShowDAO {
 			}
 			
 			if (qtdShowsLocais>0) {
-				sl.deletarLocalPorShow(show.getIdShow());
-			}
-			
-			int qtdLocais=0;
-			qtdLocais = sl.countLocaisPorShow(show.getIdShow());
-			
-			if (qtdLocais>0) {
 				sl.deletarLocalPorShow(show.getIdShow());
 			}
 			

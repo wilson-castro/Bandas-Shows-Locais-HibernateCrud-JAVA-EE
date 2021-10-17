@@ -76,11 +76,7 @@ public class FormControlShows extends HttpServlet {
 			ArrayList<Banda> listaBandas = new ArrayList<Banda>();
 			listaBandas = bandaDao.listarBandas();
 			
-<<<<<<< HEAD
         	ArrayList<ShowBanda> listaBandaShow = showbandaDao.selecionarShowsPorBanda(sb);
-=======
-        	ArrayList<ShowBanda> listaBandaShow = showbandaDao.selecionarBandasPorShow(sb);
->>>>>>> 0690f7234116e83e92b1cb685719bbc121fd397a
 					
 			SimpleDateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd");
 			String dataFormat = formatDate.format(show.getData().getTime());

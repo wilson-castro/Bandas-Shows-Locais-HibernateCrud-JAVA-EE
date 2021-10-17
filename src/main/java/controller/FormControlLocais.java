@@ -53,11 +53,11 @@ public class FormControlLocais extends HttpServlet {
 			
 			int idLocal = Integer.parseInt(request.getParameter("idLocal")); 	
 			
-			ArrayList<Show> listaShow = ShowDao.listarShows();
-			ArrayList<ShowsLocal> listaShowLocal = showsLocalDao.listarShowPorLocalPorIdLocal(idLocal);
-			
 			local.setIdLocal(idLocal);
 			localDao.selecionarLocal(local);
+			
+			ArrayList<Show> listaShow = ShowDao.listarShows();
+			ArrayList<ShowsLocal> listaShowLocal = showsLocalDao.listarShowPorLocalPorIdLocal(local.getIdLocal());
 			
 			request.setAttribute("titulo", "Editar");
 			request.setAttribute("txtBotao", "Alterar");

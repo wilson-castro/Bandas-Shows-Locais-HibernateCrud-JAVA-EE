@@ -8,18 +8,10 @@
 <%@ page import="model.beans.Show"%>
 
 <%
-<<<<<<< HEAD
-=======
-
->>>>>>> 0690f7234116e83e92b1cb685719bbc121fd397a
 ArrayList<ShowBanda> listaShowBanda = new ArrayList<ShowBanda>();
 ArrayList<Local> listaLocais = (ArrayList) request.getAttribute("locais");
 ArrayList<Banda> listaBandas = (ArrayList) request.getAttribute("bandas");
 ArrayList<Integer> idsIguaisShows = new ArrayList<>();
-<<<<<<< HEAD
-=======
-
->>>>>>> 0690f7234116e83e92b1cb685719bbc121fd397a
 String titulo = request.getAttribute("titulo").toString();
 String selectedOption = request.getAttribute("selected").toString();
 String dataDefault = request.getAttribute("dataDefault").toString();
@@ -27,7 +19,6 @@ String actionForm  = request.getAttribute("actionForm").toString();
 String textoBotao = request.getAttribute("txtBotao").toString();
 Show show = (Show) request.getAttribute("show");
 
-<<<<<<< HEAD
 
 if(titulo.equals("Editar")){
 	listaShowBanda = (ArrayList<ShowBanda>) request.getAttribute("ShowsDaBanda");
@@ -38,25 +29,11 @@ for(Banda sl : listaBandas){
 		
 		System.out.println(sb.getId_banda());
 		
-=======
-if(titulo.equals("Editar")){
-	listaShowBanda = (ArrayList<ShowBanda>) request.getAttribute("ShowsDaBanda");
-}
-
-for(Banda sl : listaBandas){	
-	
-	for(ShowBanda sb :listaShowBanda){
-		
->>>>>>> 0690f7234116e83e92b1cb685719bbc121fd397a
 		if(sb.getId_banda()==sl.getIdBanda() && !idsIguaisShows.contains(sb.getId_banda())){
 			idsIguaisShows.add(sb.getId_banda());
 		}
 	}
 }
-<<<<<<< HEAD
-=======
-
->>>>>>> 0690f7234116e83e92b1cb685719bbc121fd397a
 %>
 <!DOCTYPE html>
 <html>

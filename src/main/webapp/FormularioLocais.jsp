@@ -28,17 +28,12 @@ if(titulo.equals("Editar")){
 	listaShowsLocais = (ArrayList<ShowsLocal>) request.getAttribute("listaShowsLocais");
 }
 
-for(ShowsLocal sl : listaShowsLocais){	
-		
 	for(Show show: listaShow){
-		if(sl.getShow_Id()==show.getIdShow() && !idsIguaisShows.contains(sl.getShow_Id())){
-			idsIguaisShows.add(sl.getShow_Id());
+		if(local.getIdLocal()==show.getIdLocal() && !idsIguaisShows.contains(show.getIdShow())){
+			idsIguaisShows.add(show.getIdShow());
 		}
 	
 	}
-	
-}
-
 %>
 <!DOCTYPE html>
 <html>

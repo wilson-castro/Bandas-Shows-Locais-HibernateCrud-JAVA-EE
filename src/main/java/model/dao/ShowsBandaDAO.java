@@ -111,40 +111,7 @@ public class ShowsBandaDAO {
 	}
 	
 	public ArrayList<ShowBanda> selecionarBandasPorShow(ShowBanda banda) {
-<<<<<<< HEAD
         String sql = "select * from showsPorBanda where banda_id=?";
-=======
-        String sql = "select * from showsPorBanda where show_id=?";
-        
-        try {
-        	ArrayList<ShowBanda> shows = new ArrayList<ShowBanda>();
-
-			PreparedStatement stmt = connection.prepareStatement(sql);
-			stmt.setInt(1, banda.getId_show());
-			ResultSet rs = stmt.executeQuery();
-			
-			while(rs.next()) {
-				ShowBanda sb = new ShowBanda();
-				sb.setId_banda(rs.getInt("banda_id"));
-				sb.setId(rs.getInt("id"));
-				sb.setId_show(rs.getInt("show_id"));
-				shows.add(sb);
-			}
-			
-			rs.close();
-            stmt.close();
-            
-			return shows;
-			
-        }catch(SQLException e) {
-            throw new RuntimeException(e);
-        }
-        
-	}
-	
-	/*public void alterarBanda(Banda banda) {
-        String sql = "update bandas SET nome=?, genero=? where id_banda=? ";
->>>>>>> 0690f7234116e83e92b1cb685719bbc121fd397a
         
         try {
         	ArrayList<ShowBanda> bandas = new ArrayList<ShowBanda>();

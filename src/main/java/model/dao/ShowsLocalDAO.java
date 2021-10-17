@@ -122,12 +122,7 @@ public class ShowsLocalDAO {
     }
 	
 	public ArrayList<ShowsLocal> listarShowPorLocalPorIdLocal(int idLocal) {
-		String sql = "select"
-				+ " id_show as ID_Show,id_local as ID_Local, "
-				+ "data as DATA_Show, nome_local as ONDE,"
-				+ "  capacidade as CAPACIDADE  "
-				+ "from shows "
-				+ " inner join locais on shows.local_id  = locais.id_local where local_id =?";
+		String sql = "SELECT * FROM projeto.showsPorLocal where local_id=?";
 		ShowsBandaDAO sb = new ShowsBandaDAO();
 		
         try {
@@ -142,11 +137,8 @@ public class ShowsLocalDAO {
 
             	ShowsLocal sl = new ShowsLocal();
             	
-            	sl.setShow_Id(rs.getInt("ID_Show"));
-            	sl.setLocal_Id(rs.getInt("ID_Local"));
-            	sl.setData_show(rs.getString("DATA_Show"));
-            	sl.setLugar_nome(rs.getString("ONDE"));
-            	sl.setCapacidade(rs.getInt("CAPACIDADE"));
+            	sl.setShow_Id(rs.getInt("local_id"));
+            	sl.setLocal_Id(rs.getInt("local_id"));
             	
             	int numBandas = 0;
             	numBandas = sb.countBandaPorShow(sl.getShow_Id());
@@ -229,7 +221,6 @@ public class ShowsLocalDAO {
         
 	}
 	
-<<<<<<< HEAD
 	public void deletarShowPorLocal(int idLocal) {
         String sql = "delete from showsPorLocal where local_id=?";
                 
@@ -251,6 +242,3 @@ public class ShowsLocalDAO {
 	
 	
 }
-=======
-}
->>>>>>> 0690f7234116e83e92b1cb685719bbc121fd397a
