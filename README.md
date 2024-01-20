@@ -17,26 +17,27 @@
   <h2>Configuração do Ambiente</h2>
   <ol>
       <li><strong>Java Development Kit (JDK):</strong> Certifique-se de ter o JDK instalado. Recomenda-se a versão 8 ou superior. <a href="https://www.oracle.com/java/technologies/javase-downloads.html">Download do JDK</a></li>
-      <li><strong>Servidor de Aplicação:</strong> Utilize um servidor de aplicação compatível com Java EE, como Apache Tomcat ou WildFly.</li>
-      <li><strong>Banco de Dados:</strong> Instale e configure o MySQL. Crie um banco de dados chamado <code>cadastro_shows</code>. Configure as informações de conexão no arquivo <code>persistence.xml</code>.</li>
-      <li><strong>IDE (Ambiente de Desenvolvimento Integrado):</strong> Use uma IDE Java EE, como Eclipse ou IntelliJ, para facilitar o desenvolvimento.</li>
+      <li><strong>Servidor de Aplicação:</strong> Configure um servidor de aplicação compatível, como Apache Tomcat. <a href="http://tomcat.apache.org/">Download do Apache Tomcat</a></li>
+      <li><strong>Banco de Dados:</strong> Instale e configure o MySQL. Crie um banco de dados chamado <code>cadastro_shows</code>. Configure as informações de conexão no arquivo <code>hibernate.cfg.xml</code>.</li>
+      <li><strong>IDE (Ambiente de Desenvolvimento Integrado):</strong> Use uma IDE Java, como Eclipse ou IntelliJ, para facilitar o desenvolvimento. <a href="https://www.eclipse.org/downloads/">Eclipse IDE</a>, <a href="https://www.jetbrains.com/idea/">IntelliJ IDEA</a></li>
+      <li><strong>Dependências Maven:</strong> As dependências do projeto estão configuradas no arquivo <code>pom.xml</code>. Certifique-se de que sua IDE está configurada para baixar as dependências automaticamente.</li>
   </ol>
 
   <h2>Configuração do Banco de Dados</h2>
   <ol>
-      <li>Execute o script SQL <code>create_tables.sql</code> localizado na pasta <code>database</code> para criar as tabelas necessárias.</li>
+      <li>Execute o script SQL <code>sql.sql</code> para criar as tabelas necessárias.</li>
   </ol>
 
   <h2>Configuração do Hibernate</h2>
   <ol>
-      <li>Configure as informações de conexão com o banco de dados no arquivo <code>persistence.xml</code> localizado em <code>src/main/resources/META-INF</code>.</li>
+      <li>Configure as informações de conexão com o banco de dados no arquivo <code>ConnectionFactory</code> localizado em <code>src/main/java/jdbc</code>.</li>
   </ol>
 
   <h2>Executando o Projeto</h2>
   <ol>
       <li>Importe o projeto para sua IDE.</li>
       <li>Certifique-se de que o servidor de aplicação está configurado corretamente.</li>
-      <li>Deploy o projeto no servidor de aplicação.</li>
+      <li>Inicie o servidor e implante o projeto.</li>
       <li>Acesse o aplicativo pelo navegador: <code>http://localhost:8080/nome-do-projeto</code></li>
   </ol>
 
